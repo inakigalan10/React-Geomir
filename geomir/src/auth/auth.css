@@ -6,7 +6,6 @@
   
   body {
     font-family: arial;
-    background-image: url('bg.png');
   }
   
   .form-login {
@@ -15,10 +14,10 @@
     background: #4e4d4d;
     margin: auto;
     margin-top: 180px;
-    box-shadow: 7px 13px 37px #000;
+    box-shadow: 7px 13px 37px rgb(71, 71, 71);
     padding: 20px 30px;
     border-top: 4px solid #017bab;
-    color: white;
+    color: none;
   }
   
   .form-login h5 {
