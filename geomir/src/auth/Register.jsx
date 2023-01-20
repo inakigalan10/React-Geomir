@@ -31,28 +31,40 @@ export default function Register ({setLogin}) {
   };
   return (
     <div>
-    <section class="form-login">
-      <h5>Formulario de Registro</h5>
-        <input class="controls" type="text" name="user"  placeholder="Usuario" onChange={handleChange}/>
-        <input class="controls" type="email" name="email"  placeholder="Email" onChange={handleChange}/>
-        <input class="controls" type="password" name="password"  placeholder="Contraseña" onChange={handleChange}/>
-        <input class="controls" type="password" name="password2"  placeholder="Contraseña" onChange={handleChange}/>
-        <button class="buttons" type="submit" name="" value="Ingresar"
-          onClick={(e) => {
+    <body>
+        <div class="background">
+            <div class="shape"></div>
+            <div class="shape"></div>
+        </div>
+        <form>
+            <h3>Register Here</h3>
+
+            <label for="user">User</label>
+            <input type="text" placeholder="Email or Phone" id="user" name="user" onChange={handleChange}/>
+
+            <label for="email">Email</label>
+            <input type="text" placeholder="Email or Phone" id="email" name="email" onChange={handleChange}/>
+
+            <label for="password">Password</label>
+            <input type="password" placeholder="Password" id="password" name="password" onChange={handleChange} />
+
+            <label for="password">Repeat Password</label>
+            <input type="password" placeholder="Password" id="password" name="password2" onChange={handleChange} />
+
+
+            <button
+            onClick={(e) => {
               handleRegister(e);
-            }}>
-            Register
-        </button>
-        <button
-        onClick={() => {
-          setLogin(true);
-        }}
-      >
-      ¿Ya tienes cuenta?
-      </button>
-    
-      <p><a href="#">¿Olvidastes tu Contraseña?</a></p>
-  </section>
+            }}
+            >Register In</button>
+
+            <button
+            onClick={() => {
+              setLogin(true);
+            }}>Login</button>
+
+        </form>
+    </body>
   </div>
   )
 }

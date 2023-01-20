@@ -4,50 +4,59 @@ import { useState } from "react";
 
 export default function Login ({setLogin}) {
 
-  let [usuario, setUsuario] = useState("");
-  let [password, setPassword] = useState("");
+   let [usuario, setUsuario] = useState("");
+   let [password, setPassword] = useState("");
 
+   const sendLogin = (e) => {
+     e.preventDefault();
+     console.log("He enviat les Dades:  " + usuario + "/" + password);
+   };
 
-  const sendLogin = (e) => {
-    e.preventDefault();
-
-    console.log("He enviat les Dades:  " + usuario + "/" + password);
-  };
   return (
     <div>
-      <section class="form-login">
-        <h5>Formulario Login</h5>
-          <input 
-              class="controls" 
-              type="text" name="usuario" 
-              placeholder="Usuario"
-              onChange={(e) => {
-                setUsuario(e.target.value);
-              }}
-              />
-          <input 
-            class="controls"
-            type="password" 
-            name="contrasena" 
-            placeholder="Contraseña"
+    <body>
+        <div class="background">
+            <div class="shape"></div>
+            <div class="shape"></div>
+        </div>
+        <form>
+            <h3>Login Here</h3>
+
+            <label for="username">Username</label>
+            <input 
+            type="text" 
+            placeholder="Email or Phone" 
+            id="username"
+            name="usuario"
+            onChange={(e) => {
+              setUsuario(e.target.value);
+            }}
+            />
+
+            <label for="password">Password</label>
+            <input 
+            type="password"
+            name="password"
+            placeholder="Password" 
+            id="password"
             onChange={(e) => {
               setPassword(e.target.value);
             }}
-            />
-          <button class="buttons" type="submit" name="" value="Ingresar"
-          onClick={(e) => {
-            sendLogin(e);
-          }}
-          >Login</button>
-          <button
-        onClick={() => {
-          setLogin(false);
-        }}
-      >
-      ¿No tienes cuenta?
-      </button>
-        <p><a href="#">¿Olvidastes tu Contraseña?</a></p>
-    </section>
-    </div>
+            ></input>
+
+            <button
+            onClick={(e) => {
+              sendLogin(e);
+            }}
+            >Log In</button>
+
+            <button
+            onClick={() => {
+              setLogin(false);
+            }}>Register</button>
+
+        </form>
+    </body>
+</div>
   )
 }
