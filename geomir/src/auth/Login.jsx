@@ -9,8 +9,7 @@ export default function Login ({setLogin}) {
    let [email, setEmail] = useState("");
    let [password, setPassword] = useState("");
    let {authToken, setAuthToken}=useContext(UserContext)
-
-////////////////////p
+      
    const sendLogin = (e) => {
      e.preventDefault();
      console.log("Comprovant credencials....");

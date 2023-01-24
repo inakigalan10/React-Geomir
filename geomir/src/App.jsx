@@ -6,7 +6,7 @@ import Header from './Layout/Header';
 import { Routes, Route } from "react-router-dom";
 import NotFound from "./NotFound";
 import About from "./About";
-import Posts from "./Post/Posts"
+import Posts from "./Posts/Posts"
 const App = () => {
     let [authToken, setAuthToken] = useState("");
 

@@ -2,8 +2,7 @@ import  React  from 'react';
 import { Link } from 'react-router-dom';
 import { UserContext } from '../userContext';
 import { useState, useContext } from 'react';
-
-
+import './layout.css'
 
 export default function Header() {
   let {authToken, setAuthToken}=useContext(UserContext)
@@ -36,17 +35,29 @@ export default function Header() {
    };
   return (
     <>
-      <div>
-        <Link to="/places">Places </Link>
-        <Link to="/posts">Posts </Link>
-        <Link to="/about">About </Link>
-        <Link to="/about">About </Link>
-        <button class="secon-btn"
-            onClick={(e) => {
-              logout(e);
-            }}>Log Out</button>
+      <div className="menu">
+        <div>
+          <Link to="/places">Places </Link>
+        </div>
+        <div>
+          <Link to="/posts">Posts </Link>
+        </div>
+        <div>
+          <Link to="/about">About </Link>
+        </div>
+        <div>
+          <Link to="/about">About </Link>
+
+        </div>
+        <div className='logOut'>
+          <button className="secon-btn"
+              onClick={(e) => {
+                logout(e);
+              }}>Log Out</button>
+        </div>
+
+        
       </div>
-      <hr />
     </>
   );
 }
