@@ -1,29 +1,81 @@
-.menu{
-    background-color: greenyellow;
+.menu {
+  /* Estilos generales del menú */
+
+  width: 100%;
+  height: 100px;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content:flex-start;
+  margin:5px;
+  padding: 10px;
+}
+
+.item{
+    color: white;
+    border:1px solid yellow;
+    margin-left: 5%;
+    padding: 15px;
+    border-radius: 30px;
+    font-weight: bold;
+}
+
+.item:hover{
+    background-color: yellow;
+    border: 1px solid grey;
+    color: black;
+}
+
+#user{ 
+    margin-left: 1%; 
+    height: 80px;
     display: flex;
-    align-items: center;  
-}
-Link{
-    text-decoration: none   ;
-}
-.menu div{
-    background-color: red;
-    margin: 5px;
-    border: 3px solid black;
-    justify-content: center;
     align-items: center;
-    padding: 5px;
-    padding-top: 2%;
-    padding-bottom: 2%;
-    padding-left: 2%;
-    padding-right: 2%;
-    height: min-content;
-    border-radius: 20px;
-    width: min-content;
 }
-.menu .logOut{
-    background-color: olive;
-    right: 0px;
-    margin-right: 0px;
-    
+.userinfo{
+    padding: 15px;
 }
+
+#roleUser{
+    text-transform: capitalize;
+}
+
+.logOut{
+   padding-bottom: 20%;
+}
+
+.menu a {
+  /* Estilos para los enlaces dentro del menú */
+  color: white;
+  text-decoration: none;
+  padding: 10px;
+}
+
+.menu a:hover {
+    color: black;
+}
+
+#nameUser {
+  /* Estilos para el nombre de usuario */
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.logOut button {
+  /* Estilos para el botón de cierre de sesión */
+  background-color: #ff0000;
+  color: #fff;
+  padding: 5px 10px;
+  border: none;
+  cursor: pointer;
+  border: 1px solid black;
+}
+
+.logOut button:hover {
+    background-color: black;
+    color: #fff;
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+  }

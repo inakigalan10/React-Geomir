@@ -1,4 +1,10 @@
+import './posts.css'
+
 export default function Posts() {
-    return <h1>Aqui van POST</h1>;
+    return (
+    <div className="posts">
+    <h1>Aqui van POST</h1>
+    </div>
+    )
   }
   

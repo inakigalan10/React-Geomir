@@ -64,32 +64,30 @@ useEffect(() => {
   return (
     <>
       <div className="menu">
-        <div>
+        <div id='user' className='item'>
+          <div className='userinfo'>
+              <h2 id='nameUser'>{username}</h2>
+              <p id='roleUser'> { roles.map (  (v)=> ( 
+              <span key={v}> {v} </span>
+              ) ) }</p>
+            </div>
+            <div className='logOut'>
+              <button className="secon-btn"
+                onClick={(e) => {
+                  logout(e);
+                }}>Log Out
+              </button>
+            </div>
+        </div>
+        <div className='item'>
           <Link to="/places">Places </Link>
         </div>
-        <div>
+        <div className='item'>
           <Link to="/posts">Posts </Link>
         </div>
-        <div>
+        <div className='item'>
           <Link to="/about">About </Link>
-        </div>
-        <div>
-          <Link to="/about">About </Link>
-
-        </div>
-        <div className='logOut'>
-            <h2 id='user'>{username}</h2>
-            <p> { roles.map (  (v)=> ( 
-          <span key={v}> {v} </span>
-            ) ) }</p>
-
-          <button className="secon-btn"
-              onClick={(e) => {
-                logout(e);
-              }}>Log Out</button>
-        </div>
-
-        
+        </div>  
       </div>
     </>
   );
