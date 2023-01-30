@@ -17,8 +17,7 @@ export default function Register ({setLogin}) {
       [e.target.name]: e.target.value
     });
   };
-  const handleRegister = (e) => {
-
+  const handleRegister = async(e) => {
     e.preventDefault();
     let { name, password, password2, email } = formulari;
 
@@ -30,7 +29,8 @@ export default function Register ({setLogin}) {
       return false;
     }
 
-    fetch("https://backend.insjoaquimmir.cat/api/register", {
+    try{
+      const data = await fetch("https://backend.insjoaquimmir.cat/api/register", {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json"
@@ -38,24 +38,24 @@ export default function Register ({setLogin}) {
       method: "POST",
       // Si els noms i les variables coincideix, podem simplificar
       body: JSON.stringify({ name, email, password })
-    })
-      .then((data) => data.json())
-      .then((resposta) => {
+    });
+    const resposta = await data.json();
         document.querySelector(".input_vacio").hidden = false
         document.querySelector(".input_vacio").innerHTML = resposta['message']
         console.log(resposta);
         if (resposta.success === true) {
           console.log(resposta.authToken);
           setAuthToken(resposta.authToken)
+        }else {
+          console.log("La resposta no ha triomfat");
         }
-      })
-      .catch((data) => {
-        console.log(data);
-        console.log("Catch");
-      });
-
-    console.log("He enviat les Dades:  " + email + "/" + password);
+        console.log("He enviat les Dades:  " + email + "/" + password);
+    } catch {
+      console.log("Error");
+      console.log("catch");
+    }
   };
+
   
   return (
     <div>

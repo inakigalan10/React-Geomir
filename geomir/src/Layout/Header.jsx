@@ -1,4 +1,3 @@
-import  React, { useEffect }  from 'react';
 import { Link } from 'react-router-dom';
 import { UserContext } from '../userContext';
 import { useState, useContext } from 'react';
@@ -10,57 +9,66 @@ export default function Header() {
   let {authToken, setAuthToken}=useContext(UserContext)
   let [ roles, setRoles] = useState([]);
 
-useEffect(() => {
+  const useEffect = async () => {
+    try {
 
-    fetch("https://backend.insjoaquimmir.cat/api/user", {
+      const data = await fetch("https://backend.insjoaquimmir.cat/api/user", {
         headers: {
-          Accept: "application/json",
+          "Accept": "application/json",
           "Content-Type": "application/json",
-          'Authorization': 'Bearer '  + authToken,
+          "Authorization": 'Bearer '  + authToken,
 
         },
         method: "GET",
     })
-    .then ( data => data.json() )
-    .then (resposta => { 
+      const resposta = await data.json();
       if (resposta.success == true )
       {
-        console.log(resposta); setUserName(resposta.user.name);  setRoles(resposta.roles)
+        console.log(resposta); 
+        setUserName(resposta.user.name);  
+        setRoles(resposta.roles)
+      }else{
+        console.log("La resposta no ha triomfat");
+
       }            
+      
+    } catch {
+      console.log("Error");
+      console.log("catch");
+    }
+  };
+
+
+
+const logout = async (e) => {
+  e.preventDefault();
+
+  // Enviam dades a l'aPI i recollim resultat
+  try {
+    const data = await fetch("https://backend.insjoaquimmir.cat/api/logout", {
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      'Authorization': 'Bearer '  + authToken,
+
+    },
+    method: "POST",
   })
-  .catch((data) => {
-    console.log(data);
-    console.log("Catchch");
-  }); 
-}, [])
-
-
-  const logout = (e) => {
-    e.preventDefault();
-    console.log("Comprovant credencials....");
-    // Enviam dades a l'aPI i recollim resultat
-    fetch("https://backend.insjoaquimmir.cat/api/logout", {
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        'Authorization': 'Bearer '  + authToken,
-
-      },
-      method: "POST",
-    })
-      .then((data) => data.json())
-      .then((resposta) => {
-       console.log(resposta);
-       if (resposta.success === true) {
-        console.log(resposta.authToken);
-         
-       }
-     })
-      .catch((data) => {
-        console.log(data);
-        console.log("Catchch");
-     });  
-   };
+  const resposta = await data.json();
+     if (resposta.success === true) {
+      console.log(resposta.authToken);
+      setAuthToken('')
+       
+     }else{
+       console.log("La resposta no ha triomfat");
+     }
+     
+    } catch {
+      console.log("Error");
+      console.log("catch");
+    }
+  };
+  useEffect();
   return (
     <>
       <div className="menu">
