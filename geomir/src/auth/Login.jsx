@@ -41,9 +41,9 @@ export default function Login ({setLogin}) {
   return (
     <div>
     <body>
-        <div class="background">
-            <div class="shape"></div>
-            <div class="shape"></div>
+        <div className="background">
+            <div className="shape"></div>
+            <div className="shape"></div>
         </div>
         <form>
             <h3>Login Here</h3>
@@ -69,7 +69,7 @@ export default function Login ({setLogin}) {
               setPassword(e.target.value);
             }}
             ></input>
-            <div hidden class="input_vacio">
+            <div hidden className="input_vacio">
 
             </div>
             <button
@@ -78,7 +78,7 @@ export default function Login ({setLogin}) {
             }}
             >Log In</button>
 
-            <button class="secon-btn"
+            <button className="secon-btn"
             onClick={() => {
               setLogin(false);
             }}>Register</button>
