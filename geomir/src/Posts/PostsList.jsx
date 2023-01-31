@@ -1,5 +1,7 @@
 import React from 'react';
 import { useState, useEffect, useContext } from 'react';
+import { UserContext } from '../userContext';
+
 
 const PostsList = () => {
   let [ posts, setPosts] = useState([]);
@@ -21,8 +23,9 @@ const PostsList = () => {
         const resposta = await data.json();
         if (resposta.success == true )
         {
-          console.log(resposta); 
+          setPosts(resposta.data);
           setAuthToken(authToken);  
+          console.log(posts); 
 
          
         }else{
