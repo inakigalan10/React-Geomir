@@ -2,7 +2,11 @@ import React from 'react'
 
 const PostsGrid = () => {
   return (
-    <div>PostsGrid</div>
+    <div className='posts'>
+
+    <h1>Aqui va posts grits</h1>
+   
+  </div>
   )
 }
 

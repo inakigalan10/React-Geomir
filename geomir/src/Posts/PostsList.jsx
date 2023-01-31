@@ -1,6 +1,43 @@
-import React from 'react'
-const PostsList = () => {
+import React from 'react';
+import { useState, useEffect, useContext } from 'react';
 
+const PostsList = () => {
+  let [ posts, setPosts] = useState([]);
+  let {authToken, setAuthToken}=useContext(UserContext)
+
+
+  const getPosts = async () => {
+      try {
+  
+        const data = await fetch("https://backend.insjoaquimmir.cat/api/posts", {
+          headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+            "Authorization": 'Bearer '  + authToken,
+  
+          },
+          method: "GET",
+      })
+        const resposta = await data.json();
+        if (resposta.success == true )
+        {
+          console.log(resposta); 
+          setAuthToken(authToken);  
+
+         
+        }else{
+          console.log("La resposta no ha triomfat");
+  
+        }            
+        
+      } catch {
+        console.log("Error");
+        console.log("catch");
+      }
+    };
+    useEffect(()=>{
+      getPosts();
+  }, [])
   return (
     <div className='posts'>
 
