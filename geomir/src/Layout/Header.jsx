@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { UserContext } from '../userContext';
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import './layout.css'
 
 
@@ -9,7 +9,8 @@ export default function Header() {
   let {authToken, setAuthToken}=useContext(UserContext)
   let [ roles, setRoles] = useState([]);
 
-  const useEffect = async () => {
+
+  const getUser = async () => {
     try {
 
       const data = await fetch("https://backend.insjoaquimmir.cat/api/user", {
@@ -68,7 +69,10 @@ const logout = async (e) => {
       console.log("catch");
     }
   };
-  useEffect();
+  useEffect(()=>{
+    getUser();
+}, [])
+  
   return (
     <>
       <div className="menu">
@@ -91,7 +95,7 @@ const logout = async (e) => {
           <Link to="/places">Places </Link>
         </div>
         <div className='item'>
-          <Link to="/posts">Posts </Link>
+          <Link to="/posts">Posts</Link>
         </div>
         <div className='item'>
           <Link to="/about">About </Link>
