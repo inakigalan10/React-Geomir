@@ -1,7 +1,5 @@
-.posts{
-    background-color: aqua;
-    color: red;
-}
+
+
 ul {
     list-style-type: none;
     margin: 0;
@@ -25,3 +23,29 @@ ul {
   li a:hover {
     background-color: darkgreen;
   }
+  /* tabla de postslist*/
+
+  .postsList {
+    margin-top: 2%;
+    margin-left: 25%;
+    margin-right: 25%;
+    width: 50%;
+   
+  }
+  
+  #PostsListHeader {
+    background-color: yellow;
+    font-size: 160%;
+    font-weight: bolder;
+  }
+  #post {
+    height: 80px;
+    background-color: white;
+    color: black;
+    font-size: 130%;
+  }
+  #post:nth-child(even) {
+    background-color: #2b303b;
+    color: white;
+  }
+  

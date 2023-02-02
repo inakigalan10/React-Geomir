@@ -41,11 +41,11 @@ const getPosts = async (e) => {
 }, [])
   return (
       <> 
-        <table className='posts'>
+        <table className='postsList'>
           <tbody>
-            <tr id=''>
+            <tr id='PostsListHeader'>
               <th>Id</th>
-              <th>Name</th>
+              <th>Body</th>
               <th>Author</th>
               <th>Latitude</th>
               <th>Longitude</th>
@@ -54,7 +54,7 @@ const getPosts = async (e) => {
 
             </tr>       
             {posts.map((post) => (
-                <tr key={posts.id}><PostList post={post} /></tr>
+                <tr key={posts.id} id='post'><PostList post={post} /></tr>
             ))}
           </tbody>
       </table>
