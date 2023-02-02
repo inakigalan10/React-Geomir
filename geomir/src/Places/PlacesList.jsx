@@ -1,57 +1,67 @@
+import React from 'react';
+import { useState, useEffect, useContext } from 'react';
+import { UserContext } from '../userContext';
+import PlaceList from './PlaceList';
 
-import React, { useState, useContext, useEffect, useCallback } from 'react';
-import { UserContext } from "../userContext";
-import { PlaceList } from './PlaceList'
-import './places.css'
-export const PlacesList = () => {
-  let { usuari, setUsuari,authToken,setAuthToken } = useContext(UserContext)
-  let [places, setPlaces] = useState([]);
 
-  const sendPlacesList = async (e) => {
-    try{
+const placesList = () => {
+  let [ places, setPlaces] = useState([]);
+  let {user, setUser, authToken, setAuthToken}=useContext(UserContext)
+
+
+const getplaces = async (e) => {
+    try {
+
       const data = await fetch("https://backend.insjoaquimmir.cat/api/places", {
-          headers: {
-          Accept: "application/json",
+        headers: {
+          "Accept": "application/json",
           "Content-Type": "application/json",
-          'Authorization': 'Bearer ' + authToken
-          },
-          method: "GET",
-      })
+          "Authorization": 'Bearer '  + authToken,
+
+        },
+        method: "GET",
+    })
       const resposta = await data.json();
-          if (resposta.success === true) {
-            setPlaces(resposta.data)
-          }else{
-              setMissatge(resposta.message);
-          }
+      if (resposta.success == true )
+      {
+        setPlaces(resposta.data);
+        setAuthToken(authToken);  
 
-    }catch {
-      console.log(data);
-    }
-  }
-  useEffect(() => { sendPlacesList(); }, []);
-  console.log(usuari); 
-  return (
-    <>
+      }else{
+        console.log("La resposta /api/places no ha triomfat")
+      }            
       
-      <table id='tablePlaceList'>
-        <tbody>
-          <tr id='tr1PlaceList'>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Author</th>
-            <th>Latitude</th>
-            <th>Longitude</th>
-            <th>Reviews</th>
-            <th>Visibility</th>
-            <th>Favorites</th>
+    } catch {
+      console.log("Error /api/places");
+      console.log("catch /api/places");
+    }
+  };
+  useEffect(()=>{
+    getplaces();
+}, [])
+  return (
+      <> 
+        <table className='places'>
+          <tbody>
+            <tr id=''>
+              <th>Id</th>
+              <th>Name</th>
+              <th>Author</th>
+              <th>Latitude</th>
+              <th>Longitude</th>
+              <th>Visibility</th>
+              <th>Likes</th>
 
-          </tr>       
-          {places.map((place) => (
-              <tr  key={places.id} ><PlaceList place={place} /></tr>
-          ))}
-        </tbody>
+            </tr>       
+            {places.map((place) => (
+                <tr key={places.id}><PlaceList place={place} /></tr>
+            ))}
+          </tbody>
       </table>
-
     </>
+    
   )
 }
+
+
+export default placesList

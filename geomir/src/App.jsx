@@ -8,7 +8,7 @@ import NotFound from "./NotFound";
 import About from "./About";
 import Posts from "./Posts/Posts";
 import PlacesList from "./Places/PlacesList"
-import PlacesGrid from './Places/PlacesGrid';
+import PlacesGrid from "./Places/PlacesGrid";
 import PlaceAdd from './Places/PlaceAdd';
 import Place from './Places/Place'; 
 import PlaceEdit from './Places/PlaceEdit';
