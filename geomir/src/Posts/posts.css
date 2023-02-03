@@ -1,8 +1,10 @@
 
 
 ul {
+    position: fixed;
+    top: 120px;
     list-style-type: none;
-    margin: 0;
+    margin-left: 2%;
     padding: 0;
     overflow: hidden;
     background-color: #333;
@@ -48,4 +50,28 @@ ul {
     background-color: #2b303b;
     color: white;
   }
-  
+
+  /* post grid */
+  .cardpostgrid{
+    background-color: rgba(117, 117, 117, 0.13);
+    color: white;
+    margin-top:5%;
+    margin-left: 25%;
+    margin-right: 25%;
+    border-radius: 50px;
+    width: 40%;
+
+    display: flex;
+  }
+  .postimg img{
+    border-radius: 50px 0px 0px 50px / 25px 0px 0px 25px;
+  }
+  .bodyPost{
+    margin-left: 10%;
+    margin-top: 40%;
+  }
+
+  .likespost{
+    margin-left: 10% ;
+    margin-top: 50%;
+  }

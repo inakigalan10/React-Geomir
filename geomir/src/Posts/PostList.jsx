@@ -15,7 +15,7 @@ export default function PostList ({post})  {
         <td>{post.latitude}</td>
         <td>{post.longitude}</td>
         <td>{post.visibility.name}</td>
-        <td><i className="bi bi-star-fill"></i>{post.likes_count}</td>
+        <td>{post.likes_count}</td>
       
         
     </>
