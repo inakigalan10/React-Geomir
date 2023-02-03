@@ -25,3 +25,29 @@ ul {
   li a:hover {
     background-color: #111;
   }
+
+    /* tabla de placeslist*/
+
+    .placesList {
+      margin-top: 2%;
+      margin-left: 25%;
+      margin-right: 25%;
+      width: 50%;
+     
+    }
+    
+    #placesListHeader {
+      background-color: yellow;
+      font-size: 160%;
+      font-weight: bolder;
+    }
+    #place {
+      height: 80px;
+      background-color: white;
+      color: black;
+      font-size: 130%;
+    }
+    #place:nth-child(even) {
+      background-color: #2b303b;
+      color: white;
+    }

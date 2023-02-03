@@ -17,17 +17,8 @@ export const PlaceGrid = ({place}) => {
                 {place.description}     
             </div>
             <div className='divFavorites'>
-                <i class="bi bi-star-fill"></i>
+                <i className="bi bi-star-fill"></i>
                 {place.favorites_count}
-            </div>
-            <div id='optionsPlaceGrid'>
-                {(usuari == place.author.email ) &&  
-                <Link className="headerLink" to={"/places/edit/" +place.id}><i className="bi bi-pencil-square"></i></Link>}
-
-                {(usuari == place.author.email ) &&
-                <i className="bi bi-trash3"></i>}
-
-                <Link className="headerLink" to={"/places/" +place.id}><i className="bi bi-eye"></i></Link>
             </div>
         </div>
     </>

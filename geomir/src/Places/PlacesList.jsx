@@ -41,20 +41,21 @@ const getplaces = async (e) => {
 }, [])
   return (
       <> 
-        <table className='places'>
+        <table className='placesList'>
           <tbody>
-            <tr id=''>
+            <tr id='placesListHeader'>
               <th>Id</th>
               <th>Name</th>
               <th>Author</th>
               <th>Latitude</th>
               <th>Longitude</th>
               <th>Visibility</th>
-              <th>Likes</th>
+              <th>Favourites</th>
+              <th>Opciones</th>
 
             </tr>       
             {places.map((place) => (
-                <tr key={places.id}><PlaceList place={place} /></tr>
+                <tr key={places.id} id='place'><PlaceList place={place} /></tr>
             ))}
           </tbody>
       </table>

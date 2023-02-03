@@ -27,8 +27,7 @@ export const placesGrid = () => {
           }
 
     }catch {
-      console.log(data);
-      alert("Estem tenint problemes amb la xarxa");
+      console.log("Algo ha salido mal");
     }
   }
   useEffect(() => { sendPlacesGrid(); }, []);
@@ -36,8 +35,7 @@ export const placesGrid = () => {
     <>
         <div className='wrapper'>
           { places.map ( (place)=> ( 
-              (place.visibility.name == 'public' || usuari == place.author.email) &&  
-              (<PlaceGrid place={place} />)
+              <PlaceGrid place={place} />
           ) ) }
           
         </div>  
