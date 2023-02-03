@@ -51,11 +51,16 @@ const getPosts = async (e) => {
               <th>Longitude</th>
               <th>Visibility</th>
               <th>Likes</th>
+              <th>Show</th>
+              <th>edit</th>
+              <th>delete</th>
 
-            </tr>       
-            {posts.map((post) => (
-                <tr key={posts.id} id='post'><PostList post={post} /></tr>
-            ))}
+
+            </tr>      
+          { posts.map ( (post)=> (
+              (post.visibility.name != 'private' || user == post.author.email) &&
+              <tr key={posts.id} id='post'><PostList post={post} /></tr>
+          ))}
           </tbody>
       </table>
     </>
