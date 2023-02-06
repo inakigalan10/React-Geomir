@@ -1,5 +1,5 @@
 import React from 'react';
-import {useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { UserContext } from '../userContext';
 import './posts.css';
 import {FaRegEye} from 'react-icons/fa'
@@ -8,7 +8,40 @@ import {BsFillTrashFill} from 'react-icons/bs';
 
 
 export default function PostList ({post})  {
-  let { user, setUser,authToken,setAuthToken } = useContext(UserContext)
+  let { authToken,setAuthToken } = useContext(UserContext);
+  let[username, setUserName]=useState("");
+  const getUser = async () => {
+    try {
+  
+      const data = await fetch("https://backend.insjoaquimmir.cat/api/user", {
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json",
+          "Authorization": 'Bearer '  + authToken,
+  
+        },
+        method: "GET",
+    })
+      const resposta = await data.json();
+      if (resposta.success == true )
+      {
+        console.log(resposta); 
+        setUserName(resposta.user.name);  
+        setRoles(resposta.roles)
+      }else{
+        console.log("La resposta no ha triomfat");
+  
+      }            
+      
+    } catch {
+      console.log("Error");
+      console.log("catch");
+    }
+  };
+  useEffect(()=>{
+    getUser();
+  }, [])
+  
 
   return (
     <>
@@ -24,14 +57,14 @@ export default function PostList ({post})  {
               <FaRegEye/>
         </td>
         
-        {(user == post.author.email) ?
+        {(username == post.author.name) ?
           <td>
             <AiFillEdit/>
           </td>
           : <td></td>
         }
 
-        {(user == post.author.email) ?
+        {(username == post.author.name) ?
           <td>
               <BsFillTrashFill/>
           </td>

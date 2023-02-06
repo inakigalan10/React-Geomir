@@ -6,10 +6,10 @@ import PostList from './PostList';
 
 const PostsList = () => {
   let [ posts, setPosts] = useState([]);
-  let {user, setUser, authToken, setAuthToken}=useContext(UserContext)
+  let { authToken, setAuthToken}=useContext(UserContext);
+  let[username, setUserName]=useState("");
 
-
-const getPosts = async (e) => {
+  const getPosts = async (e) => {
     try {
 
       const data = await fetch("https://backend.insjoaquimmir.cat/api/posts", {
@@ -39,6 +39,40 @@ const getPosts = async (e) => {
   useEffect(()=>{
     getPosts();
 }, [])
+
+const getUser = async () => {
+  try {
+
+    const data = await fetch("https://backend.insjoaquimmir.cat/api/user", {
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "Authorization": 'Bearer '  + authToken,
+
+      },
+      method: "GET",
+  })
+    const resposta = await data.json();
+    if (resposta.success == true )
+    {
+      console.log(resposta); 
+      setUserName(resposta.user.name);  
+      setRoles(resposta.roles)
+    }else{
+      console.log("La resposta no ha triomfat");
+
+    }            
+    
+  } catch {
+    console.log("Error");
+    console.log("catch");
+  }
+};
+useEffect(()=>{
+  getUser();
+}, [])
+console.log(username)
+
   return (
       <> 
         <table className='postsList'>
@@ -58,7 +92,7 @@ const getPosts = async (e) => {
 
             </tr>      
           { posts.map ( (post)=> (
-              (post.visibility.name != 'private' || user == post.author.email) &&
+              (post.visibility.name != 'private' || username == post.author.name) &&
               <tr key={posts.id} id='post'><PostList post={post} /></tr>
           ))}
           </tbody>

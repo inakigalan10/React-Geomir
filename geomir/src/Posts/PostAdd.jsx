@@ -14,11 +14,11 @@ let { authToken,setAuthToken } = useContext(UserContext);
 
 useEffect(() => {
 
-navigator.geolocation.getCurrentPosition( (pos )=> {
+navigator.geolocation.getCurrentPosition( (post )=> {
   setFormulari({
     ...formulari,
-    latitude :  pos.coords.latitude,
-    longitude: pos.coords.longitude,
+    latitude :  post.coords.latitude,
+    longitude:  post.coords.longitude,
     visibility : 1
   })
 
@@ -35,16 +35,15 @@ navigator.geolocation.getCurrentPosition( (pos )=> {
   };
   const sendPlace = async(e) => {
     e.preventDefault();
-    let {name,description,upload,latitude,longitude,visibility}=formulari;
+    let {body,upload,latitude,longitude,visibility}=formulari;
     const formData = new FormData();
-    formData.append("name", name);
-    formData.append("description", description);
+    formData.append("body", body);
     formData.append("upload", upload);
     formData.append("latitude", latitude);
     formData.append("longitude", longitude);
     formData.append("visibility", visibility);
     try{
-      const data = await fetch("https://backend.insjoaquimmir.cat/api/places", {
+      const data = await fetch("https://backend.insjoaquimmir.cat/api/posts", {
         headers: {
           'Accept': 'application/json',
           'Authorization': 'Bearer ' + authToken,
@@ -53,13 +52,17 @@ navigator.geolocation.getCurrentPosition( (pos )=> {
         body: formData
       })
       const resposta = await data.json();
-      if (resposta.success === true) console.log(resposta), formulario.reset(), alert("Place enviado");
+      if (resposta.success === true){ 
+        console.log(resposta), 
+        formulario.reset(), 
+        console.log("Post enviado");
 
-      else alert("La resposta no ha triomfat");
+    }else{ 
+        console.log("La resposta no ha triomfat");}
         
     }catch{
       console.log("Error");
-      alert("catch");
+      console.log("catch");
     }
     
   };
@@ -70,15 +73,9 @@ return (
       <div className="screen__content">
 
         <form id="formulario" className="login">
-          <div className="title">Add Places</div>
+          <div className="title">Add Post</div>
 
           <div className="login__field">
-            <i className="login__icon fas fa-user"></i>
-            <input type="text" className="login__input" placeholder="Name" id="name" name="name"  onChange={handleChange}/>
-          </div>
-
-          <div className="login__field">
-            <i className="login__icon fas fa-user"></i>
             <input type="text" className="login__input" placeholder="Description" id="description" name="description" onChange={handleChange}/>
           </div>
           <div className="login__field">
