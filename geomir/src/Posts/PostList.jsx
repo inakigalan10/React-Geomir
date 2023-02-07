@@ -8,39 +8,8 @@ import {BsFillTrashFill} from 'react-icons/bs';
 
 
 export default function PostList ({post})  {
-  let { authToken,setAuthToken } = useContext(UserContext);
-  let[username, setUserName]=useState("");
-  const getUser = async () => {
-    try {
-  
-      const data = await fetch("https://backend.insjoaquimmir.cat/api/user", {
-        headers: {
-          "Accept": "application/json",
-          "Content-Type": "application/json",
-          "Authorization": 'Bearer '  + authToken,
-  
-        },
-        method: "GET",
-    })
-      const resposta = await data.json();
-      if (resposta.success == true )
-      {
-        console.log(resposta); 
-        setUserName(resposta.user.name);  
-        setRoles(resposta.roles)
-      }else{
-        console.log("La resposta no ha triomfat");
-  
-      }            
-      
-    } catch {
-      console.log("Error");
-      console.log("catch");
-    }
-  };
-  useEffect(()=>{
-    getUser();
-  }, [])
+  let { authToken,setAuthToken, username, setUserName } = useContext(UserContext);
+
   
 
   return (
@@ -57,14 +26,14 @@ export default function PostList ({post})  {
               <FaRegEye/>
         </td>
         
-        {(username == post.author.name) ?
+        {(username == post.author.email) ?
           <td>
             <AiFillEdit/>
           </td>
           : <td></td>
         }
 
-        {(username == post.author.name) ?
+        {(username == post.author.email) ?
           <td>
               <BsFillTrashFill/>
           </td>

@@ -18,10 +18,13 @@ import PostMenu from './Posts/PostMenu';
 
 const App = () => {
     let [authToken, setAuthToken] = useState("");
+    let [username, setUserName ] = useState("");
+   
+
 
 
   return (
-    <UserContext.Provider value={{ authToken, setAuthToken }} >
+    <UserContext.Provider value={{ authToken, setAuthToken, username, setUserName }} >
     {authToken ? (
       <>
          <Header />

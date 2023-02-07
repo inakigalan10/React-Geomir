@@ -5,7 +5,7 @@ import { useState, useContext } from 'react';
 
 export default function Register ({setLogin}) {
 
-  let {authToken, setAuthToken}=useContext(UserContext)
+  let { authToken,setAuthToken, username, setUserName } = useContext(UserContext);
   let [formulari, setFormulari] = useState({});
 
 
@@ -44,8 +44,8 @@ export default function Register ({setLogin}) {
         document.querySelector(".input_vacio").innerHTML = resposta['message']
         console.log(resposta);
         if (resposta.success === true) {
-          console.log(resposta.authToken);
-          setAuthToken(resposta.authToken)
+          setAuthToken(resposta.authToken),
+          setUserName(email);
         }else {
           console.log("La resposta no ha triomfat");
         }

@@ -75,3 +75,19 @@ ul {
     margin-left: 10% ;
     margin-top: 50%;
   }
+ 
+  option{
+    color: white;
+    background-color: #2b303b;
+    
+  }
+
+  select{
+    margin-top: 2%;
+    background: transparent;
+    border: none;
+    font-size: 14px;
+    height: 30px;
+    padding: 5px;
+    width: 450px;
+  }
