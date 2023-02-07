@@ -58,6 +58,7 @@ navigator.geolocation.getCurrentPosition( (post )=> {
         console.log(resposta), 
         formulario.reset(), 
         console.log("Post enviado");
+        
 
     }else{ 
         console.log("La resposta no ha triomfat");}
@@ -76,21 +77,21 @@ return (
           <div className="title">Add Post</div>
 
           <div className="input">
-            <label htmlFor="description">Description</label>
-            <input type="text"  placeholder="Description" id="description" name="description" onChange={handleChange}/>
+            <label htmlFor="body">Body</label>
+            <input type="text"  placeholder="Body" id="body" name="body" onChange={handleChange}/>
           </div>
-          <div className="login__field">
+          <div className="input">
               <label htmlFor="upload">File</label>
               <input type="file"  placeholder="Upload" id="upload" name="upload" onChange={handleChange}/>
             </div>
 
             <div className="input">
-            <label htmlFor="latitude">Latitude</label>
+              <label htmlFor="latitude">Latitude</label>
               <input type="number"  placeholder="Latitude" id="latitude" name="latitude" value={formulari.latitude} onChange={handleChange}/>
             </div>
 
             <div className="input">
-            <label htmlFor="longitude">Longitude</label>
+              <label htmlFor="longitude">Longitude</label>
               <input type="number" className="login__input" placeholder="Longitude" id="longitude" name="longitude" value={formulari.longitude} onChange={handleChange}/>
             </div>
 
@@ -100,16 +101,16 @@ return (
                 <option onChange={handleChange} name="visibility" value="1">Public</option>
                 <option onChange={handleChange} name="visibility" value="2">Contacts</option>
                 <option onChange={handleChange} name="visibility" value="3">Private</option>
-            </select>
-            
+            </select> 
             </div>
 
-            <button className="button login__submit"
+            <button
               onClick={(e) => {
                 sendPlace(e);
               }}>
-              <span className="button__text">Submit</span>
-            </button>		
+                Enviar Post
+            </button>
+            	
 
           </form>
           
