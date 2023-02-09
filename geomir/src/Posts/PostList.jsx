@@ -23,11 +23,13 @@ export default function PostList ({post, deletePost ,refresh, setRefresh})  {
         <td>{post.longitude}</td>
         <td>{post.visibility.name}</td>
         <td>{post.likes_count}</td>
+        <td>{post.comments_count}</td>
 
         <td>
             <Link to={"/posts/" + post.id} >
               <FaRegEye/>
             </Link>
+           
 
         </td>
         

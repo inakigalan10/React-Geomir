@@ -83,6 +83,7 @@ const deletePost = async(id) => {
               <th>Longitude</th>
               <th>Visibility</th>
               <th>Likes</th>
+              <th>Comments</th>
               <th>Show</th>
               <th>edit</th>
               <th>delete</th>
