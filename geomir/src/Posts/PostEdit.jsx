@@ -74,6 +74,7 @@ const PostEdit = () => {
       if (resposta.success === true){
       console.log(resposta), 
       console.log("Post editado");
+      
 
       }else{ 
         console.log("La resposta no ha triomfat");

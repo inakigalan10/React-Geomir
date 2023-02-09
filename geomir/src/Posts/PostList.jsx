@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 
 
 
-export default function PostList ({post})  {
+export default function PostList ({post, deletePost ,refresh, setRefresh})  {
   let { authToken,setAuthToken, username, setUserName } = useContext(UserContext);
 
   
@@ -42,7 +42,13 @@ export default function PostList ({post})  {
 
         {(username == post.author.email) ?
           <td>
-              <BsFillTrashFill/>
+            <Link>
+              <BsFillTrashFill
+              onClick={() => {
+                deletePost(post.id), setRefresh(!refresh);
+                }}/>
+              
+          </Link>
           </td>
           : <td></td>
         }

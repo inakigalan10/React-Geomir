@@ -13,7 +13,6 @@ const PostAdd = () => {
 });
 
 let { authToken,setAuthToken } = useContext(UserContext);
-
 useEffect(() => {
 
 navigator.geolocation.getCurrentPosition( (post )=> {
