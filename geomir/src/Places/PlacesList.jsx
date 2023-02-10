@@ -6,7 +6,7 @@ import PlaceList from './PlaceList';
 
 const placesList = () => {
   let [ places, setPlaces] = useState([]);
-  let {user, setUser, authToken, setAuthToken}=useContext(UserContext)
+  let {authToken, setAuthToken}=useContext(UserContext)
 
 
 const getplaces = async (e) => {
@@ -52,10 +52,13 @@ const getplaces = async (e) => {
               <th>Visibility</th>
               <th>Favourites</th>
               <th>Opciones</th>
+              
+
 
             </tr>       
-            {places.map((place) => (
-                <tr key={places.id} id='place'><PlaceList place={place} /></tr>
+            { places.map ( (place)=> (
+              (place.visibility.name != 'private' || user == place.author.email) &&
+              <tr key={place.id} id='place'><PlaceList place={place} /></tr>
             ))}
           </tbody>
       </table>

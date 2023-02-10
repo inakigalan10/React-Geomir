@@ -5,10 +5,9 @@ import { useState, useContext } from 'react';
 
 
 export default function Login ({setLogin}) {
-
    let [email, setEmail] = useState("");
    let [password, setPassword] = useState("");
-   let {authToken, setAuthToken}=useContext(UserContext)
+   let { authToken, setAuthToken}=useContext(UserContext)
       
    const sendLogin = async(e) => {
      e.preventDefault();

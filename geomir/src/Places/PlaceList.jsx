@@ -9,7 +9,7 @@ import {AiFillEdit} from 'react-icons/ai'
 import {BsFillTrashFill} from 'react-icons/bs'
 
 export default function placesList ({place})  {
-  let { user, setUser,authToken,setAuthToken } = useContext(UserContext)
+  let {authToken,setAuthToken } = useContext(UserContext)
 
   return (
     <>
@@ -20,7 +20,14 @@ export default function placesList ({place})  {
         <td>{place.longitude}</td>
         <td>{place.visibility.name}</td>
         <td>{place.favorites_count}<AiOutlineStar/></td>
-        <tr><FaRegEye/><AiFillEdit/><BsFillTrashFill/></tr>   
+
+
+        {(user == place.author.email) ?
+          <tr><FaRegEye/><AiFillEdit/><BsFillTrashFill/></tr>
+          : <tr><FaRegEye/></tr>
+        }
+
+
     </>
   )
 }

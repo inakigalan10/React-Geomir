@@ -33,7 +33,7 @@ export const placesGrid = () => {
   useEffect(() => { sendPlacesGrid(); }, []);
   return (
     <>
-        <div className='wrapper'>
+        <div className='placegrid'>
           { places.map ( (place)=> ( 
               <PlaceGrid place={place} />
           ) ) }
