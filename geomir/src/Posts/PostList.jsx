@@ -5,6 +5,7 @@ import './posts.css';
 import {FaRegEye} from 'react-icons/fa'
 import {AiFillEdit} from 'react-icons/ai'
 import {BsFillTrashFill} from 'react-icons/bs';
+import {FaCommentDots} from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
 
@@ -23,7 +24,12 @@ export default function PostList ({post, deletePost ,refresh, setRefresh})  {
         <td>{post.longitude}</td>
         <td>{post.visibility.name}</td>
         <td>{post.likes_count}</td>
-        <td>{post.comments_count}</td>
+        <td>{post.comments_count} 
+          <br />
+            <Link to={"/posts/post/"+post.id+"/comment"}>
+              <FaCommentDots/>
+            </Link>
+        </td>
 
         <td>
             <Link to={"/posts/" + post.id} >

@@ -14,7 +14,6 @@ import PostsList from "./Posts/PostsList";
 import Index from './index';
 import PostMenu from './Posts/PostMenu';
 import CommnetsList from './Posts/comments/CommnetsList';
-import Comments from './Posts/comments/Comments';
 
 
 
@@ -40,7 +39,7 @@ const App = () => {
               <Route path="/posts/add" element={ <><PostMenu/> <PostAdd/></> } /> 
               <Route path="/posts/:id" element={ <><PostMenu/> <Post/></> } /> 
               <Route path="/posts/edit/:id" element={ <><PostMenu/> <PostEdit/></> } /> 
-              <Route path="/posts/post/:id/comment" element={ <><PostMenu/> <CommnetsList/></> } /> 
+              <Route path="/posts/post/:id/comment" element={ <><CommnetsList/></> } /> 
 
             </Routes>
       </>

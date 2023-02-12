@@ -29,7 +29,7 @@ navigator.geolocation.getCurrentPosition( (post )=> {
   const handleChange = (e) => {
     e.preventDefault();
     setFormulari({
-      // ...formulari es como el cache
+     
       ...formulari,
       [e.target.name]: e.target.type == "file" ? e.target.files[0] : e.target.value
     });

@@ -41,15 +41,6 @@ const CommnetsList = ({id}) => {
         <th>Id</th>
         <th>Body</th>
         <th>Author</th>
-        <th>Latitude</th>
-        <th>Longitude</th>
-        <th>Visibility</th>
-        <th>Likes</th>
-        <th>Show</th>
-        <th>edit</th>
-        <th>delete</th>
-
-
       </tr>      
     
     </tbody>
