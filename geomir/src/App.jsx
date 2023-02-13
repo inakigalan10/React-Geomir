@@ -13,13 +13,14 @@ import PlaceAdd from './Places/PlaceAdd';
 import Place from './Places/Place'; 
 import PlaceEdit from './Places/PlaceEdit';
 import PlaceMenu from './Places/PlaceMenu';
+import CommnetsList from './Places/comments/CommentsList';
 
 const App = () => {
     let [authToken, setAuthToken] = useState("");
-
+    let [username, setUserName] = useState("");
 
   return (
-    <UserContext.Provider value={{ authToken, setAuthToken }} >
+    <UserContext.Provider value={{ authToken, setAuthToken, username, setUserName }} >
     {authToken ? (
       <>
          <Header />
@@ -32,7 +33,8 @@ const App = () => {
               <Route path="/places/grid" element={<> <PlaceMenu/> <PlacesGrid /> </>} />
               <Route path="/places/add" element={<> <PlaceMenu/> <PlaceAdd /></>} />
               <Route path="/places/:id" element={<> <PlaceMenu/> <Place /> </>} />
-              <Route path="/places/edit/:id" element={<> <PlaceMenu/> <PlaceEdit /> </>} />
+              <Route path="/places/edit/:id" element={<> <PlaceMenu /> <PlaceEdit /> </>} />
+              <Route path="/posts/post/:id/comment" element={<><CommnetsList /></>} /> 
             </Routes>
       </>
     ) : (

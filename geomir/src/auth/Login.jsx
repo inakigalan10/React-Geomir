@@ -7,7 +7,7 @@ import { useState, useContext } from 'react';
 export default function Login ({setLogin}) {
    let [email, setEmail] = useState("");
    let [password, setPassword] = useState("");
-   let { authToken, setAuthToken}=useContext(UserContext)
+  let { authToken, setAuthToken, username, setUserName }=useContext(UserContext)
       
    const sendLogin = async(e) => {
      e.preventDefault();
@@ -27,7 +27,8 @@ export default function Login ({setLogin}) {
         document.querySelector(".input_vacio").hidden = false
         document.querySelector(".input_vacio").innerHTML = resposta['message']
       if (resposta.success === true)
-         setAuthToken(resposta.authToken);
+        setAuthToken(resposta.authToken),
+        setUserName(email);
       else 
         console.log("La resposta no ha triomfat");
         console.log("He enviat les Dades:  " + email + "/" + password);

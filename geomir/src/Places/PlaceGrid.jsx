@@ -10,12 +10,12 @@ import './places.css'
 
 export const PlaceGrid = ({place}) => {
     console.log(place)
-    let {authToken,setAuthToken } = useContext(UserContext)
+    let { username, setUser, authToken,setAuthToken } = useContext(UserContext)
   return (
     <>
         <div className='cardplacegrid'>
             <div>
-        {(user == place.author.email) ?
+        {(username == place.author.email) ?
           <tr><FaRegEye/><AiFillEdit/><BsFillTrashFill/></tr>
           : <tr><FaRegEye/></tr>
         }
@@ -28,7 +28,10 @@ export const PlaceGrid = ({place}) => {
                     <p>@{place.author.name}</p>
                 </div>
             
-                <hr color='yellow'/>
+                  <hr color='yellow' />
+                  <div className='bodyName'>
+                      {place.name}
+                  </div>
                 <div className='bodyPlace'>
                     {place.description}    
                 </div>

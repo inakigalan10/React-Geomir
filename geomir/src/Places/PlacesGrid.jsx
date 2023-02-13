@@ -4,8 +4,8 @@ import { UserContext } from '../userContext';
 import { PlaceGrid } from './PlaceGrid'
 
 export const placesGrid = () => {
-  let { usuari, setUsuari,authToken,setAuthToken } = useContext(UserContext)
   let [places, setPlaces] = useState([]);
+  let { username, setUserName, authToken, setAuthToken } = useContext(UserContext)
 
   const sendPlacesGrid = async (e) => {
     try{
@@ -19,11 +19,11 @@ export const placesGrid = () => {
       })
       const resposta = await data.json();
           console.log(resposta);
-          if (resposta.success === true) {
+          if (resposta.success == true) {
               setPlaces(resposta.data)
-              console.log(resposta);
+              setAuthToken(authToken);
           }else{
-              setMissatge(resposta.message);
+            setMissatge("La resposta no ha triomfat");
           }
 
     }catch {

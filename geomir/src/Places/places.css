@@ -58,7 +58,7 @@ ul {
     }
 
 
-  /* post grid */
+  /* place grid */
   .cardplacegrid{
     background-color: rgba(117, 117, 117, 0.13);
     color: white;
@@ -82,4 +82,20 @@ ul {
   .favouritePlace{
     margin-left: 10% ;
     margin-top: 50%;
+  }
+
+  option {
+    color: white;
+    background-color: #2b303b;
+
+  }
+
+  select {
+    margin-top: 2%;
+    background: transparent;
+    border: none;
+    font-size: 14px;
+    height: 30px;
+    padding: 5px;
+    width: 450px;
   }

@@ -6,7 +6,9 @@ import PlaceList from './PlaceList';
 
 const placesList = () => {
   let [ places, setPlaces] = useState([]);
-  let {authToken, setAuthToken}=useContext(UserContext)
+  let [refresh, setRefresh] = useState(false)
+
+  let { authToken,setAuthToken, username, setUserName } = useContext(UserContext);
 
 
 const getplaces = async (e) => {
@@ -25,20 +27,48 @@ const getplaces = async (e) => {
       if (resposta.success == true )
       {
         setPlaces(resposta.data);
-        setAuthToken(authToken);  
+        setAuthToken(authToken);
 
       }else{
-        console.log("La resposta /api/places no ha triomfat")
+        console.log("La resposta no ha triomfat")
       }            
       
     } catch {
-      console.log("Error /api/places");
+      console.log("Error");
       console.log("catch /api/places");
     }
   };
   useEffect(()=>{
     getplaces();
-}, [])
+  }, [refresh])
+  
+
+  const deletePlace = async (id) => {
+    try {
+
+      const data = await fetch("https://backend.insjoaquimmir.cat/api/places/" + id, {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          'Authorization': 'Bearer ' + authToken,
+        },
+        method: "DELETE"
+      })
+      const resposta = await data.json();
+      if (resposta.success === true) {
+        console.log(resposta),
+          setRefresh(!refresh);
+
+      } else {
+        console.log("La resposta no a triomfat");
+      }
+
+    } catch {
+      console.log("Error");
+      alert("catch");
+    }
+
+  }
   return (
       <> 
         <table className='placesList'>
@@ -51,14 +81,14 @@ const getplaces = async (e) => {
               <th>Longitude</th>
               <th>Visibility</th>
               <th>Favourites</th>
-              <th>Opciones</th>
-              
-
-
+              <th>Comments</th>
+              <th>Show</th>
+              <th>edit</th>
+              <th>delete</th>
             </tr>       
             { places.map ( (place)=> (
-              (place.visibility.name != 'private' || user == place.author.email) &&
-              <tr key={place.id} id='place'><PlaceList place={place} /></tr>
+              (place.visibility.name != 'private' || username == place.author.email) &&
+              <tr key={place.id} id='place'><PlaceList place={place} deletePlace={deletePlace} setRefresh={setRefresh} refresh={refresh}/></tr>
             ))}
           </tbody>
       </table>
