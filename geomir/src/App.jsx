@@ -13,7 +13,7 @@ import PlaceAdd from './Places/PlaceAdd';
 import Place from './Places/Place'; 
 import PlaceEdit from './Places/PlaceEdit';
 import PlaceMenu from './Places/PlaceMenu';
-import CommnetsList from './Places/comments/CommentsList';
+import ReviewsList from './Places/reviews/ReviewsList';
 
 const App = () => {
     let [authToken, setAuthToken] = useState("");
@@ -34,7 +34,7 @@ const App = () => {
               <Route path="/places/add" element={<> <PlaceMenu/> <PlaceAdd /></>} />
               <Route path="/places/:id" element={<> <PlaceMenu/> <Place /> </>} />
               <Route path="/places/edit/:id" element={<> <PlaceMenu /> <PlaceEdit /> </>} />
-              <Route path="/posts/post/:id/comment" element={<><CommnetsList /></>} /> 
+              <Route path="/places/:id/reviews" element={<><ReviewsList /></>} /> 
             </Routes>
       </>
     ) : (

@@ -81,10 +81,10 @@ const getplaces = async (e) => {
               <th>Longitude</th>
               <th>Visibility</th>
               <th>Favourites</th>
-              <th>Comments</th>
+              <th>Reviews</th>
               <th>Show</th>
-              <th>edit</th>
-              <th>delete</th>
+              <th>Edit</th>
+              <th>Delete</th>
             </tr>       
             { places.map ( (place)=> (
               (place.visibility.name != 'private' || username == place.author.email) &&

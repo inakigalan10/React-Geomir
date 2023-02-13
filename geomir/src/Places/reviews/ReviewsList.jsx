@@ -3,13 +3,13 @@ import '../places.css';
 import { useState, useContext, useEffect } from 'react';
 import { UserContext } from '../../userContext';
 
-const CommnetsList = ({ id }) => {
-    let { user, setUser, authToken, setAuthToken } = useContext(UserContext)
-    let [comments, setComments] = useState([]);
+const ReviewsList = ({ id }) => {
+    let { authToken, setAuthToken, username, setUserName } = useContext(UserContext);
+    let [reviews, setReviews] = useState([]);
 
-    const getComments = async () => {
+    const getReviews = async () => {
         try {
-            const data = await fetch("https://backend.insjoaquimmir.cat/api/posts/" + id + "/comments", {
+            const data = await fetch("https://backend.insjoaquimmir.cat/api/places/" + id + "/reviews", {
                 headers: {
                     Accept: "application/json",
                     "Content-Type": "application/json",
@@ -20,7 +20,7 @@ const CommnetsList = ({ id }) => {
             })
             const resposta = await data.json();
             if (resposta.success === true) {
-                setComments(resposta.data),
+                setReviews(resposta.data),
                     console.log(resposta);
 
             } else {
@@ -32,20 +32,19 @@ const CommnetsList = ({ id }) => {
         }
     }
     useEffect(() => {
-        getComments();
+        getReviews();
     }, []);
     return (
-        <table className='postsList'>
+        <table className='placesList'>
             <tbody>
-                <tr id='PostsListHeader'>
+                <tr id='PlacesListHeader'>
                     <th>Id</th>
                     <th>Body</th>
                     <th>Author</th>
                 </tr>
-
             </tbody>
         </table>
     )
 }
 
-export default CommnetsList
+export default ReviewsList

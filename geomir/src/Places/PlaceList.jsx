@@ -21,9 +21,9 @@ export default function placesList({ place, deletePlace, refresh, setRefresh }) 
       <td>{place.longitude}</td>
       <td>{place.visibility.name}</td>
       <td>{place.favorites_count}</td>
-      <td>{place.comments_count}
+      <td>{place.reviews_count}
         
-        <Link to={"/places/place/" + place.id + "/comment"}>
+        <Link to={"/places/" + place.id + "/reviews"}>
           <br />
           <FaCommentDots />
         </Link>
