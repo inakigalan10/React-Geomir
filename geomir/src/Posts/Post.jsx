@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { useParams } from "react-router-dom";
 import { UserContext } from "../userContext";
+import CommnetsList from './comments/CommnetsList';
 import './posts.css';
 
 
@@ -32,7 +33,8 @@ export default function Posts() {
       }
       
   }
-  useEffect(() => { getPost(); }, []);
+  useEffect(() => { 
+    getPost(); }, []);
   return (
     <>  {(isLoading == true) ? <div>Cargando datos...</div>:
         <div className='cardpostgrid'>
@@ -51,8 +53,9 @@ export default function Posts() {
                 Likes: {post.likes_count}
             </div>
         </div>
+        <div><CommnetsList id={post.id}/></div>
     </div>
-       
+     
         
       }
     </>

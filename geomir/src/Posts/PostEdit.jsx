@@ -48,9 +48,6 @@ const PostEdit = () => {
       }
       
   }
- 
-  
-  
 
   const sendPost = async(e) => {
     e.preventDefault();
