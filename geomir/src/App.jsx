@@ -46,7 +46,7 @@ function App() {
 
     <UserContext.Provider value= { { usuari, setUsuari,authToken,setAuthToken }}>
       
-      { authToken != "" ? (
+      { authToken ? (
       
         <>
         <Header/>
