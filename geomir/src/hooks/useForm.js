@@ -30,12 +30,14 @@ export const useForm = (initialForm={}) => {
     
     };
     
-    // ………………………
-    
+    const onResetForm = ({})=> {
+        setFormState(initialForm)
+    }
     // Podem afegir més mètodes
     
     // I s’hauran de retornar a continuació
     
-    return { ...formState, formState,onInputChange };
+    return { ...formState, formState,onInputChange, onResetForm };
     
     };
+

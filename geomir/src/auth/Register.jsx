@@ -62,11 +62,6 @@ export const Register = ({ setLogin }) => {
         alert("He enviat les Dades:  " + email + "/" + password);
 
     }
-
-
-   
-
-
     
   return (
    
