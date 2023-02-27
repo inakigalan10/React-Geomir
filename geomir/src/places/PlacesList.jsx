@@ -9,6 +9,8 @@ import { UserContext } from '../userContext';
 import { PlacesAdd } from './PlacesAdd'
 import { useEffect } from 'react';
 import { PlaceList } from './PlaceList';
+import { useFetch } from "../hooks/useFetch";
+
 
 export const PlacesList = () => {
 
@@ -21,33 +23,16 @@ export const PlacesList = () => {
       
   // només quan la vble d'estat refresca canvia el seu valor
   // refresca canviarà el valor quan fem alguna operació com delete   
-  useEffect(() => {
-    // Crida a l'api. mètode GET
-    fetch ("https://backend.insjoaquimmir.cat/api/places",{
-        // mode: 'cors',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer '  + authToken 
-           
-          },
-        method: "GET",
-    }
-    ).then( data => data.json() )
-    .then (resposta => { 
-        
-        // Faria falta control·lar possible error
-            console.log(resposta.data); 
-            // Actualitzem la vble d'estat places
-            setPlaces(resposta.data);
-            // Canvia el valor de refresca
-            // provocarà que entri a useEffect
-            // al fer el rendertizat 
-            // setRefresca(false);
-          
-        } ) 
-         
-  }, [refresh])   // condició d'execució del useffect
+  const { data, error, loading} = useFetch("https://backend.insjoaquimmir.cat/api/places", {
+    headers: {
+      "Accept": "application/json",
+      "Content-Type": "application/json",
+      "Authorization": "Bearer " + authToken,
+    },
+    method: "GET",
+  })
+  
+  // condició d'execució del useffect
     
 
   // Esborrar un element
