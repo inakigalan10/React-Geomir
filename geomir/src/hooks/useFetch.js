@@ -4,7 +4,7 @@ export const useFetch = (initialUrl, initialOptions) => {
   const [url, setUrl] = useState(initialUrl);
   const [options, setOptions] = useState(initialOptions);
   const [data, setData] = useState();
-  const [error, setError] = useState();
+  const [error, setError] = useState(); 
   const [loading, setLoading] = useState(true);
   const [refresh, setRefresh] = useState(false);
 

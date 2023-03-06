@@ -2,9 +2,11 @@ import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useContext } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { UserContext } from "../userContext";
 import "leaflet/dist/leaflet.css";
+import { useReducer } from "react";
+import { postsMarkReducer } from "./marks/postsMarksReducer";
 
 import "../App.css";
 import { Icon } from "leaflet";
@@ -14,12 +16,23 @@ import { PostsMenu } from "./PostsMenu";
 import { CommentAdd } from "./comments/CommentAdd";
 import { CommentsList } from "./comments/CommentsList";
 // import { MarkerLayer, Marker } from "react-leaflet-marker";
+import { useForm } from '../hooks/useForm';
+const initialState = [];
+const init = () => {
+  // Si localstorage tornes null tornariem un array buit
+  return JSON.parse(localStorage.getItem("postMarks")) || [];
+};
 
 export const Post = () => {
   const { id } = useParams();
+  const [postMarks, dispatchPostsMarks] = useReducer(postsMarkReducer, initialState, init);
+  const {pathname} = useLocation();
+
+  useEffect (() => {
+      localStorage.setItem("postMarks", JSON.stringify(postMarks));
+   }, [postMarks] );
 
   let { usuari, setUsuari, authToken, setAuthToken } = useContext(UserContext);
-
   let [post, setPost] = useState({});
 
   // place és un objecte, amb ojctes interns (place.file.filepath, per exemple)
@@ -165,6 +178,27 @@ export const Post = () => {
     test_like();
   }, []);
 
+  const handleNewPostMark = (e) => {
+    e.preventDefault()
+    console.log("Afegeixo");
+    //console.log({ postMarks });
+
+    let postMarks = { 
+        id: post.id,
+        body:post.body
+    } 
+
+   
+
+    const action = {
+      type: "Add Post Mark",
+      payload: postMarks
+    };
+    dispatchPostsMarks(action);
+  };
+
+  
+
   const position = [43.92853, 2.14255];
 
   const deletePost = (id, e) => {
@@ -268,6 +302,13 @@ export const Post = () => {
                 ) : (
                   <></>
                 )}
+                <button
+                    onClick={(e)=> {handleNewPostMark(e)}}
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 h-10 md:h-10 uppercase"
+
+>
+                    Afegit Tasca 
+                </button>
                 {liked ? (
                   <a
                     href="#"
