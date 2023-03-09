@@ -6,6 +6,8 @@ import './index.css'
 
 import { BrowserRouter } from 'react-router-dom'
 import { Map } from './components/aplicacio/Map'
+import { Provider } from 'react-redux'
+import { store } from './store'
 
 
 
@@ -17,8 +19,10 @@ import { Map } from './components/aplicacio/Map'
 />
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-   <BrowserRouter>
-      <App />
-      
-    </BrowserRouter>
+   <Provider store={store}>
+    <BrowserRouter>
+        <App />
+        
+      </BrowserRouter>
+    </Provider>
 )

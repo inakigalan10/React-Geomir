@@ -1,7 +1,6 @@
 export const postsMarkReducer = (initialState, action) => {
     switch (action.type) {
       case "Add Post Mark":
-        console.log("AAAAAfegeixo")
         return [...initialState, action.payload];
   
       case "Del Post Mark":

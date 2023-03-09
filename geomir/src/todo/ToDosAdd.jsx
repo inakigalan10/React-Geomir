@@ -1,38 +1,51 @@
-import React from 'react'
-import { useForm } from '../hooks/useForm';
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useForm } from "../hooks/useForm";
+import { addtodo } from "../slices/todoSlice";
 
+export const ToDoAdd = () => {
+  const { description, formState, onInputChange, onResetForm } = useForm({
+    description: ""
+  });
 
+  //const { todos } = useSelector(state => state.todos)
+  // console.log(todos)
+  const dispatch = useDispatch();
 
-export const ToDosAdd = ({handleNewToDo}) => {
+  const onFormSubmit = (event) => {
+    event.preventDefault();
+    if (description.length <= 1) return;
 
-    const { formState, onInputChange, onResetForm} = useForm({
-        id: 0,
-        text: "",
-        done: false,
-        });
-        const {id, text,done} = formState;
+    const newTodo = {
+      id: new Date().getTime(),
+      description: description,
+      done: false
+    };
+
+    onResetForm();
+    //handle(newTodo)
+    console.log("Abans del dispatch");
+    dispatch(addtodo(newTodo));
+  };
 
   return (
-    <div className="py-9 p1-9">
-        <div className='w-1/3'>
-            <label className='text-gray-600'>Text</label>
-            <input type="text"  value={text}
-                name="text"
-                onChange={onInputChange}
-                className="w-300 px-4 py-3 border border-gray-300 rounded-sm  outline-nine focus:border-gray-400"
-            />
-            <div className='py-9'>
-                <button type='submit'
-                    onClick={(e)=>{handleNewToDo(formState); onResetForm(formState)}}
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
-                >
-                    Afegit Tasca 
-                </button>
-            </div>
-            
-        </div>
-        
-    </div>  
-    
-  )
-  }
+    <div className="mb-4">
+      <h1 className="text-grey-darkest">Todo List</h1>
+      <form onSubmit={onFormSubmit} className="flex mt-4">
+        <input
+          className="shadow appearance-none border rounded w-full py-2 px-3 mr-4 text-gray-800"
+          placeholder="Què farem avui?"
+          name="description"
+          value={description}
+          onChange={onInputChange}
+        />
+        <input
+          type="submit"
+          // onClick={handle}
+          value="Add"
+          className="flex-no-shrink p-2 border-2 rounded text-teal-400 border-teal-600 hover:text-white hover:bg-teal-500"
+        />
+      </form>
+    </div>
+  );
+};

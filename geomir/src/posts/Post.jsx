@@ -2,11 +2,13 @@ import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useContext } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { UserContext } from "../userContext";
 import "leaflet/dist/leaflet.css";
 import { useReducer } from "react";
 import { postsMarkReducer } from "./marks/postsMarksReducer";
+import { addpostmark } from "../slices/marksPostsSlices";
 
 import "../App.css";
 import { Icon } from "leaflet";
@@ -27,6 +29,7 @@ export const Post = () => {
   const { id } = useParams();
   const [postMarks, dispatchPostsMarks] = useReducer(postsMarkReducer, initialState, init);
   const {pathname} = useLocation();
+  const dispatch = useDispatch();
 
   useEffect (() => {
       localStorage.setItem("postMarks", JSON.stringify(postMarks));
@@ -59,6 +62,24 @@ export const Post = () => {
         method: "DELETE",
       }
     );
+
+    const onFormSubmit = (event) => {
+      event.preventDefault();
+      if (description.length <= 1) return;
+  
+      const newPostmark = {
+        id: new Date().getTime(),
+        description: description,
+        link:pathname,
+        done: false
+      };
+  
+      onResetForm();
+      //handle(newPostmark)
+      console.log("Abans del dispatch");
+      dispatch(addpostmark(newPostmark));
+    };
+    
     const resposta = await data.json();
     if (resposta.success == true) {
       setLiked(false);
@@ -178,24 +199,25 @@ export const Post = () => {
     test_like();
   }, []);
 
-  const handleNewPostMark = (e) => {
-    e.preventDefault()
-    console.log("Afegeixo");
-    //console.log({ postMarks });
+  // const handleNewPostMark = (e) => {
+  //   e.preventDefault()
+  //   console.log("Afegeixo");
+  //   //console.log({ postMarks });
 
-    let postMarks = { 
-        id: post.id,
-        body:post.body
-    } 
+  //   let postMarks = { 
+  //       id: post.id,
+  //       body:post.body,
+  //       link:pathname,
+  //   } 
 
    
 
-    const action = {
-      type: "Add Post Mark",
-      payload: postMarks
-    };
-    dispatchPostsMarks(action);
-  };
+  //   const action = {
+  //     type: "Add Post Mark",
+  //     payload: postMarks
+  //   };
+  //   dispatchPostsMarks(action);
+  // };
 
   
 
@@ -302,13 +324,14 @@ export const Post = () => {
                 ) : (
                   <></>
                 )}
-                <button
-                    onClick={(e)=> {handleNewPostMark(e)}}
+                <a
+                    href="#"
+                    onClick={(e)=> onFormSubmit(e)}
                     className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 h-10 md:h-10 uppercase"
 
 >
                     Afegit Tasca 
-                </button>
+                </a>
                 {liked ? (
                   <a
                     href="#"

@@ -21,11 +21,10 @@ export const PostsMark = () => {
   }, [postMarks]);
 
   
-
+  
   const handleDeleteMarkPost = (id) => {
-    console.log("AQui arribo " + id);
     dispatchPosts({
-      type: "Del Todo",
+      type: "Del Post Mark",
       payload: id
     });
   };
@@ -38,10 +37,10 @@ export const PostsMark = () => {
         <div className="bg-white rounded shadow p-6 m-4 w-full lg:w-3/4 lg:max-w-lg">
 
           <div>
-            {postMarks.map((postMarks) => (
+            {postMarks.map((postMark) => (
               <PostMark
-                key={postMarks.id}
-                postMarks={postMarks}
+                key={postMark.id}
+                postMark={postMark}
                 handleDeleteMarkPost={handleDeleteMarkPost}
                 
               />
