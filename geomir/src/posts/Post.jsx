@@ -18,22 +18,25 @@ import { PostsMenu } from "./PostsMenu";
 import { CommentAdd } from "./comments/CommentAdd";
 import { CommentsList } from "./comments/CommentsList";
 // import { MarkerLayer, Marker } from "react-leaflet-marker";
-import { useForm } from '../hooks/useForm';
-const initialState = [];
-const init = () => {
-  // Si localstorage tornes null tornariem un array buit
-  return JSON.parse(localStorage.getItem("postMarks")) || [];
-};
+// import { useForm } from '../hooks/useForm';
+// const initialState = [];
+// const init = () => {
+//   // Si localstorage tornes null tornariem un array buit
+//   return JSON.parse(localStorage.getItem("postMarks")) || [];
+// };
+
 
 export const Post = () => {
   const { id } = useParams();
-  const [postMarks, dispatchPostsMarks] = useReducer(postsMarkReducer, initialState, init);
+  const { postmarks } = useSelector(state => state.postmarks)
+
+  // const [postMarks, dispatchPostsMarks] = useReducer(postsMarkReducer, initialState, init);
   const {pathname} = useLocation();
   const dispatch = useDispatch();
 
-  useEffect (() => {
-      localStorage.setItem("postMarks", JSON.stringify(postMarks));
-   }, [postMarks] );
+  // useEffect (() => {
+  //     localStorage.setItem("postMarks", JSON.stringify(postMarks));
+  //  }, [postMarks] );
 
   let { usuari, setUsuari, authToken, setAuthToken } = useContext(UserContext);
   let [post, setPost] = useState({});
@@ -63,28 +66,26 @@ export const Post = () => {
       }
     );
 
-    const onFormSubmit = (event) => {
-      event.preventDefault();
-      if (description.length <= 1) return;
-  
-      const newPostmark = {
-        id: new Date().getTime(),
-        description: description,
-        link:pathname,
-        done: false
-      };
-  
-      onResetForm();
-      //handle(newPostmark)
-      console.log("Abans del dispatch");
-      dispatch(addpostmark(newPostmark));
-    };
-    
     const resposta = await data.json();
     if (resposta.success == true) {
       setLiked(false);
       setLikes(likes - 1);
     }
+  };
+
+  const onFormSubmit = (event) => {
+    event.preventDefault();
+    //if (post.body.length <= 1) return;
+
+    console.log("AAAAAAAAA")
+    const newPostmark = {
+      id: post.id,
+      body: post.body,
+      link:pathname,
+    };
+    //handle(newPostmark)
+    console.log("Abans del dispatch");
+    dispatch(addpostmark(newPostmark));
   };
   const like = async () => {
     try {

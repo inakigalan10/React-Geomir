@@ -10,14 +10,14 @@ const initialState = [];
 
 const init = () => {
   // Si localstorage tornes null tornariem un array buit
-  return JSON.parse(localStorage.getItem("postMarks")) || [];
+  return JSON.parse(localStorage.getItem("postmarks")) || [];
 };
 
 export const PostsMark = () => {
   const [postMarks, dispatchPosts] = useReducer(postsMarkReducer, initialState, init);
 
   useEffect(() => {
-    localStorage.setItem("postMarks", JSON.stringify(postMarks));
+    localStorage.setItem("postmarks", JSON.stringify(postMarks));
   }, [postMarks]);
 
   

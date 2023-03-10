@@ -15,7 +15,7 @@ initialState,
 reducers: {
 
 addpostmark: (state,action) => {
-
+console.log("SSSSSSSSSSSS")
 state.postmarks.push(action.payload) // aqui podem fer push
 
 },
@@ -31,6 +31,5 @@ state.postmarks = state.postmarks.filter( postmark => postmark.id !== action.pay
 })
 
 export const { addpostmark, delpostmark, togglepostmark } = postmarksSlice.actions
-const postmarksReducer = postmarksSlice.reducer
 
-export default postmarksReducer 
+export default postmarksSlice.reducer 
