@@ -1,13 +1,23 @@
-export const postsMarkReducer = (initialState, action) => {
-    switch (action.type) {
-      case "Add Post Mark":
-        return [...initialState, action.payload];
-  
-      case "Del Post Mark":
-        // Retornarà un nou array amb tots els elements menys el de l'id
-        return initialState.filter((postMark) => postMark.id !== action.payload);
-  
-      default:
-        return [...initialState];
-    }
-  };
+const postsMarksReducer = (initialState,action) => {
+  switch (action.type) {
+
+    case "Add Mark":
+      
+        console.log("Mark post" + action.payload )
+
+        return [ ...initialState, action.payload]
+
+    case "Del Mark":
+      
+        console.log("Delete mark" + action.payload )
+      
+        return initialState.filter( (mark) => mark.id !== action.payload)
+              
+    default:
+      
+    return [...initialState]
+      
+  }
+}
+
+export default postsMarksReducer

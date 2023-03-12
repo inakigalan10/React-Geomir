@@ -26,8 +26,7 @@ import { PostsAdd } from './posts/PostsAdd'
 import { Post } from './posts/Post'
 import { PostEdit } from './posts/PostEdit'
 import { ToDos } from './todo/ToDos'
-import { PostsMark } from './posts/marks/PostsMark'
-
+import PostMarks from './posts/marks/PostMarks'
 // "leaflet": "^1.9.3",
 //     "react": "^18.2.0",
 //     "react-dom": "^18.2.0",
@@ -69,7 +68,7 @@ function App() {
             <Route path="/posts/add" element={ <><PostsMenu/><PostsAdd/></> } /> 
             <Route path="/posts/edit/:id" element={  <><PostsMenu/><PostEdit /></> } />
             <Route path="/posts/:id" element={ <><PostsMenu/><Post/></> } /> 
-          <Route path="/posts/mark" element={<><PostsMenu/><PostsMark/></>}/>
+          <Route path="/posts/mark" element={<><PostsMenu/><PostMarks/></>}/>
             
 
             <Route path="/about" element={<About />} />

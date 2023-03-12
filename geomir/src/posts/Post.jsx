@@ -7,8 +7,7 @@ import { Link, useLocation, useParams } from "react-router-dom";
 import { UserContext } from "../userContext";
 import "leaflet/dist/leaflet.css";
 import { useReducer } from "react";
-import { postsMarkReducer } from "./marks/postsMarksReducer";
-import { addpostmark } from "../slices/marksPostsSlices";
+import postsMarksReducer, { addpostmark, ismarked } from "../slices/postMarkSlice";
 
 import "../App.css";
 import { Icon } from "leaflet";
@@ -28,11 +27,11 @@ import { CommentsList } from "./comments/CommentsList";
 
 export const Post = () => {
   const { id } = useParams();
-  const { postmarks } = useSelector(state => state.postmarks)
+  const { postMarks, isMarked } = useSelector((state) => state.postMarks);
+  const dispatch = useDispatch();
 
   // const [postMarks, dispatchPostsMarks] = useReducer(postsMarkReducer, initialState, init);
   const {pathname} = useLocation();
-  const dispatch = useDispatch();
 
   // useEffect (() => {
   //     localStorage.setItem("postMarks", JSON.stringify(postMarks));
@@ -73,20 +72,7 @@ export const Post = () => {
     }
   };
 
-  const onFormSubmit = (event) => {
-    event.preventDefault();
-    //if (post.body.length <= 1) return;
-
-    console.log("AAAAAAAAA")
-    const newPostmark = {
-      id: post.id,
-      body: post.body,
-      link:pathname,
-    };
-    //handle(newPostmark)
-    console.log("Abans del dispatch");
-    dispatch(addpostmark(newPostmark));
-  };
+ 
   const like = async () => {
     try {
       const data = await fetch(
@@ -113,6 +99,30 @@ export const Post = () => {
       console.log(e);
     }
   };
+
+  const markPost = (event) => {
+    event.preventDefault();
+    console.log("Afegeixo");
+    // console.log({ post });
+
+    if(post.body.lenght <= 1) return;
+
+    const postMark = {
+        id: post.id,
+        body: post.body,
+        ruta: pathname
+    };
+
+    // const action = {
+    //     type: "Add Mark",
+    //     payload: mark
+    // };
+    console.log(postMark)
+    dispatch(addpostmark(postMark))
+
+    alert('HAS GUARDADO EL POST EN MARKS')
+    
+};
   const test_like = async () => {
     try {
       const data = await fetch(
@@ -198,6 +208,8 @@ export const Post = () => {
   useEffect(() => {
     getPost();
     test_like();
+    dispatch(ismarked(id));
+
   }, []);
 
   // const handleNewPostMark = (e) => {
@@ -325,14 +337,24 @@ export const Post = () => {
                 ) : (
                   <></>
                 )}
-                <a
+                {isMarked ? (
+                  <a
                     href="#"
-                    onClick={(e)=> onFormSubmit(e)}
+                    
+                    className="bg-blue-300 hover:bg-blue-400 text-white font-bold py-2 px-4 h-10 md:h-10 uppercase"
+                  >
+                    DESAT
+                  </a>
+                ) : (
+                  <a
+                    href="#"
+                    onClick={(e) => markPost(e)}
                     className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 h-10 md:h-10 uppercase"
+                  >
+                    DESAR
+                  </a>
+                )}
 
->
-                    Afegit Tasca 
-                </a>
                 {liked ? (
                   <a
                     href="#"
