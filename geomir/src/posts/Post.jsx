@@ -342,7 +342,7 @@ export const Post = () => {
                     
                     className="bg-blue-300 hover:bg-blue-400 text-white font-bold py-2 px-4 h-10 md:h-10 uppercase"
                   >
-                    AÑADIR POST MARK
+                    ELIMINAR POST MARK
                   </a>
                 ) : (
                   <a
@@ -350,7 +350,7 @@ export const Post = () => {
                     onClick={(e) => markPost(e)}
                     className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 h-10 md:h-10 uppercase"
                   >
-                    ELIMINAR POST MARK
+                    AÑADIR POST MARK 
                   </a>
                 )}
 
