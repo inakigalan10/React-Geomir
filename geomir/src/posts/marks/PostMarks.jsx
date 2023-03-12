@@ -33,16 +33,27 @@ const PostMarks = () => {
 
     return (
         <>
-        {postMarks.map((postMark) => (
-            <>
-            <th>Body</th>
-            <th colSpan={2}>Actions</th>
-            <tr>
-                <PostMark key={postMark.id} postMark={postMark}/>
-            </tr>
-            </>
-        ))}
+        <div className="h-100 w-full flex items-center justify-center bg-teal-lightest font-sans">
+            <div className="bg-white rounded shadow p-6 m-4 w-full lg:w-3/4 lg:max-w-lg">
+                {postMarks.length == 0 ? (
+                <div>No hi ha res</div>
+                ) : (
+                <></>
+                )}
+                {postMarks.map((postMark) => (
+                    <>
+                    <th>Body</th>
+                    <th colSpan={2}>Actions</th>
+                    <tr>
+                        <PostMark key={postMark.id} postMark={postMark}/>
+                    </tr>
+                    </>
+                ))}
+            </div>
+        </div>
         </>
+
+        
     )
 }
 
