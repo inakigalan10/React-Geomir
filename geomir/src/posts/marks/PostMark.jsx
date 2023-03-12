@@ -19,8 +19,10 @@ const PostMark = ({postMark}) => {
             <br></br>
             <td><button        className="flex-no-shrink  p-2 ml-2 border-2 rounded  border-red-600  hover:text-white text-red-400 hover:bg-red-500"
                              onClick={(e) => {dispatch(delpostmark(postMark.id))}}>ESBORRAR</button></td>
-         </div>
+            </div>
+            
         </>
+
     )
 }
 

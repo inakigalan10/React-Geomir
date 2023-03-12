@@ -14,8 +14,8 @@ const PlaceMarks = () => {
 
 
     return (
-        <div className="h-100 w-full flex  justify-center bg-teal-lightest font-sans">
-            <div className="bg-white rounded shadow p-6 m-4 w-full lg:w-3/4 lg:max-w-lg">
+        <div className="h-100 w-full flex items-center justify-center bg-teal-lightest font-sans">
+            <div className="bg-white rounded shadow p-6 m-4 w-full lg:w-3/4 ">
                 {placeMarks.length == 0 ? (
                     <div>No hi ha res</div>
             
@@ -28,7 +28,7 @@ const PlaceMarks = () => {
                                     <th colSpan={2}>Acciones</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody class= "divide-y divide-gray-200">
                                 {placeMarks.map((placeMark) => (
                                     <PlaceMark key={placeMark.id} placeMark={placeMark} />
                                 ))}
