@@ -1,6 +1,6 @@
 import React, { useEffect, useReducer } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import PlaceMark from './PlaceMark';
+import PlaceMark from './placeMark';
 
 const PlaceMarks = () => {
 
