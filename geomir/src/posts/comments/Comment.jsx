@@ -15,40 +15,7 @@ export const Comment = ({ comment }) => {
 
   console.log(comment)
 
-  const deleteComment = async (id, e) => {
-    const headers = {
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + authToken,
-      },
-      method: "DELETE",
-    };
-
-    e.preventDefault();
-
-    let confirma = confirm("Estas  segur?");
-
-    if (confirma) {
-      const data = await fetch(
-        "https://backend.insjoaquimmir.cat/api/posts/" +
-          comment.post.id +
-          "/comments/" +
-          comment.id,
-        headers
-      );
-      const resposta = await data.json();
-
-      console.log(resposta);
-      if (resposta.success == true) {
-        console.log("OK");
-        // provoca el refrescat del component i la reexecució de useEffect
-        setRefresca(true);
-        setAdd(true);
-        setCommentsCount(commentsCount - 1);
-      }
-    }
-  };
+  
 
   return (
     <div class="px-10">
@@ -86,7 +53,7 @@ export const Comment = ({ comment }) => {
             {comment.user.email === usuari ? (
               <>
                 <button
-                  onClick={(e) => deleteComment(comment.id, e)}
+                  onClick={(e) => dispatch( delReview(review,authToken)) }
                   type="button"
                   class="inline-block px-6 py-2 border-2 border-red-600 text-red-600 font-medium text-xs leading-tight uppercase rounded-full hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out"
                 >
