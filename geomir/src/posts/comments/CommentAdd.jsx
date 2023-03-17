@@ -1,45 +1,27 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { useContext } from "react";
 import { UserContext } from "../../userContext";
 import { CommentsContext } from "./commentsContext";
 import { useForm } from '../../hooks/useForm';
+import { useDispatch, useSelector } from "react-redux";
+import { addComment, getComments } from "../../slices/comments/thunks";
 
-
+ 
 export const CommentAdd = ({ id }) => {
-  let { usuari, setUsuari, authToken, setAuthToken } = useContext(UserContext);
-  let { setAdd, setRefresca, commentsCount, setCommentsCount } =
-    useContext(CommentsContext);
+  const { usuari, email,setUsuari, authToken, setAuthToken } = useContext(UserContext);
+  const { comments = [], page=0, isLoading=true, add=true, error="", commentsCount=0 } = useSelector((state) => state.comments);
+  const dispatch = useDispatch();
     const { formState, onInputChange, onResetForm} = useForm({
       comment: "",      
       });
       
       const { comment} = formState
-  const addComment = async () => {
-    let data = await fetch(
-      "https://backend.insjoaquimmir.cat/api/posts/" + id + "/comments",
-      {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          //'Content-type': 'multipart/form-data',
-          Authorization: "Bearer " + authToken,
-        },
-        method: "POST",
-        // body: JSON.stringify({ name,description,upload,latitude,longitude,visibility })
-        body: JSON.stringify({ comment }),
-      }
-    );
-    let resposta = await data.json();
-    console.log(resposta);
-    if (resposta.success == true) {
-      console.log("Todo bien"); 
-      setRefresca(true);
-      setCommentsCount(commentsCount + 1);
-    } else {
-      console.log("S'ha produit un error");
-    }
-  };
+
+  useEffect(()=>{
+    dispatch(getComments(0,id,authToken,usuari));
+  },[]);
+ 
   return (
     <>
       <div class="flex mx-auto items-center justify-center  mt-6 mx-8 mb-4 max-w-lg">
@@ -76,10 +58,10 @@ export const CommentAdd = ({ id }) => {
               </div>
               <div class="-mr-1">
                 <input
-                  onClick={addComment}
+                  onClick={(e) =>dispatch( addComment(comment,authToken)) }
                   type="button"
                   class="bg-white text-gray-700 font-medium py-1 px-4 border border-gray-400 rounded-lg tracking-wide mr-1 hover:bg-gray-100"
-                  value="Post Review"
+                  value="Post comment"
                 />
               </div>
             </div>
