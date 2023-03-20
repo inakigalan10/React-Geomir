@@ -21,6 +21,7 @@ export const getComments = (page = 0, id, authToken, usuari="") => {
         if (resposta.success == true) 
         {
             dispatch(setComments(resposta.data));
+            dispatch(setCommentsCount(resposta.data.length))
         }
         else {
             dispatch (setError(resposta.message));
@@ -60,15 +61,16 @@ export const delComment = (comment, authToken) => {
             // usuari no l'indiquem i per defecta estarà a ""
             dispatch (getComments(0,comment.post.id,authToken))
             const state = getState()
-            dispatch (setCommentsCount(state.commentsCount - 1));
+            dispatch (setCommentsCount(state.comments_count - 1));
           }
     };
 };
 
-export const addComment =  (comment, authToken) => {
+export const addComment =  ( post_id, comment, authToken) => {
+    console.log(comment)
     return async (dispatch, getState) => {
     const data = await fetch(
-      "https://backend.insjoaquimmir.cat/api/posts/" + id + "/comments",
+      "https://backend.insjoaquimmir.cat/api/posts/"+post_id+"/comments",
       {
         headers: {
           Accept: "application/json",
@@ -88,9 +90,10 @@ export const addComment =  (comment, authToken) => {
         dispatch (setAdd(false));
         console.log("Todo bien"); 
         dispatch(setComments(comment))
-        dispatch (getComments(0,comment.post.id,authToken))
+        dispatch (getComments(0,post_id,authToken))
         const state = getState()
         dispatch (setCommentsCount(state.commentsCount + 1));
+  
 
 
     } else {

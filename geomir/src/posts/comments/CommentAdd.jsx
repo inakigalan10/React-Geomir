@@ -6,7 +6,6 @@ import { CommentsContext } from "./commentsContext";
 import { useForm } from '../../hooks/useForm';
 import { useDispatch, useSelector } from "react-redux";
 import { addComment, getComments } from "../../slices/comments/thunks";
-
  
 export const CommentAdd = ({ id }) => {
   const { usuari, email,setUsuari, authToken, setAuthToken } = useContext(UserContext);
@@ -58,7 +57,7 @@ export const CommentAdd = ({ id }) => {
               </div>
               <div class="-mr-1">
                 <input
-                  onClick={(e) =>dispatch( addComment(comment,authToken)) }
+                  onClick={(e) =>dispatch( addComment(id,comment,authToken)) }
                   type="button"
                   class="bg-white text-gray-700 font-medium py-1 px-4 border border-gray-400 rounded-lg tracking-wide mr-1 hover:bg-gray-100"
                   value="Post comment"
