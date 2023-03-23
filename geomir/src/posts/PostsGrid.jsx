@@ -12,52 +12,63 @@ import { PostsAdd } from "./PostsAdd";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { PostGrid } from "./PostGrid";
+import { getposts } from "../slices/posts/thunks";
+import { useDispatch, useSelector } from "react-redux";
+import { delPost } from '../slices/posts/thunks';
+
 
 export const PostsGrid = () => {
   // Ho utilitzem per provar un refresc quan esborrem un element
-  let [refresca, setRefresca] = useState(false);
-  // Dades del context. Ens cal el token per poder fer les crides a l'api
-  let { usuari, setUsuari, authToken, setAuthToken } = useContext(UserContext);
+  // let [refresca, setRefresca] = useState(false);
+  // // Dades del context. Ens cal el token per poder fer les crides a l'api
+  // let { usuari, setUsuari, authToken, setAuthToken } = useContext(UserContext);
+  const { usuari, email,setUsuari, authToken, setAuthToken } = useContext(UserContext);
+  const { posts = [], page=0, isLoading=true, add=true, error=""} = useSelector((state) => state.posts);
+  const dispatch = useDispatch();
+
 
   // només quan la vble d'estat refresca canvia el seu valor
   // refresca canviarà el valor quan fem alguna operació com delete
   // Crida a l'api. mètode GET
-  const { data, error, loading} = useFetch("https://backend.insjoaquimmir.cat/api/posts", {
-    headers: {
-      "Accept": "application/json",
-      "Content-Type": "application/json",
-      "Authorization": "Bearer " + authToken,
-    },
-    method: "GET",
-  })
+  // const { data, error, loading} = useFetch("https://backend.insjoaquimmir.cat/api/posts", {
+  //   headers: {
+  //     "Accept": "application/json",
+  //     "Content-Type": "application/json",
+  //     "Authorization": "Bearer " + authToken,
+  //   },
+  //   method: "GET",
+  // })
 
   // Esborrar un element
-  const deletePost = (id, e) => {
-    e.preventDefault();
+  // const deletePost = (id, e) => {
+  //   e.preventDefault();
 
-    let confirma = confirm("Estas  segur?");
+  //   let confirma = confirm("Estas  segur?");
 
-    if (confirma) {
-      fetch("https://backend.insjoaquimmir.cat/api/posts/" + id, {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + authToken,
-        },
-        method: "DELETE",
-      })
-        .then((data) => data.json())
-        .then((resposta) => {
-          console.log("Posts:" + resposta);
-          if (resposta.success == true) {
-            console.log("OK");
-            // provoca el refrescat del component i la reexecució de useEffect
-            setRefresca(true);
-          }
-        });
-    }
-  };
-
+  //   if (confirma) {
+  //     fetch("https://backend.insjoaquimmir.cat/api/posts/" + id, {
+  //       headers: {
+  //         Accept: "application/json",
+  //         "Content-Type": "application/json",
+  //         Authorization: "Bearer " + authToken,
+  //       },
+  //       method: "DELETE",
+  //     })
+  //       .then((data) => data.json())
+  //       .then((resposta) => {
+  //         console.log("Posts:" + resposta);
+  //         if (resposta.success == true) {
+  //           console.log("OK");
+  //           // provoca el refrescat del component i la reexecució de useEffect
+  //           setRefresca(true);
+  //         }
+  //       });
+  //   }
+  // };
+  useEffect(() => {
+    dispatch(getposts(0, authToken,email));
+    
+  }, []);
   return (
     <>
       <div className="py-16 bg-gradient-to-br from-green-50 to-cyan-100">
@@ -71,11 +82,12 @@ export const PostsGrid = () => {
           </div>
 
           <div className="grid gap-12 lg:grid-cols-2">
-            {loading ? "Espera..." : <>{data.map((v) => {
+            {isLoading ? "Espera..." : <>{
+            posts.map((v) => {
               return (
             
                 <>
-                { v.visibility.id == 1 || v.author.email == usuari ? (<PostGrid  deletePost={ deletePost } key={v.id} v={v}/>) : <></> }
+                { v.visibility.id == 1 || v.author.email == usuari ? (<PostGrid  delPost={ delPost } key={v.id} v={v}/>) : <></> }
             
                 </>
                 )   

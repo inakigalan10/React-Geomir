@@ -5,53 +5,58 @@ import { UserContext } from "../userContext";
 import { PostsAdd } from "./PostsAdd";
 import { useEffect } from "react";
 import { PostList } from "./PostList";
-import { useFetch } from "../hooks/useFetch";
+import { useFetch } from "../hooks/useFetch"; 
+import { useDispatch, useSelector } from "react-redux";
+import { delPost, getposts } from "../slices/posts/thunks";
+
 
 export const PostsList = () => {
   // desa el retorn de dades de l'api places
   //let [posts, setPosts] = useState([]);
   // Ho utilitzem per provar un refresc quan esborrem un element
-  let [refresh, setRefresh] = useState(false);
-  // Dades del context. Ens cal el token per poder fer les crides a l'api
-  let { usuari, setUsuari, authToken, setAuthToken } = useContext(UserContext);
-
+  const { usuari, email,setUsuari, authToken, setAuthToken } = useContext(UserContext);
+  const { posts = [], page=0, isLoading=true, add=true, error=""} = useSelector((state) => state.posts);
+  const dispatch = useDispatch();
   // només quan la vble d'estat refresca canvia el seu valor
   // refresca canviarà el valor quan fem alguna operació com delete
   // Crida a l'api. mètode GET
-  const { data, error, loading} = useFetch("https://backend.insjoaquimmir.cat/api/posts", {
-    headers: {
-      "Accept": "application/json",
-      "Content-Type": "application/json",
-      "Authorization": "Bearer " + authToken,
-    },
-    method: "GET",
-  })
+  // const { data, error, loading} = useFetch("https://backend.insjoaquimmir.cat/api/posts", {
+  //   headers: {
+  //     "Accept": "application/json",
+  //     "Content-Type": "application/json",
+  //     "Authorization": "Bearer " + authToken,
+  //   },
+  //   method: "GET",
+  // })
  
    // condició d'execució del useffect
 
   // Esborrar un element
-  const deletePost = (id, e) => {
+  // const deletePost = (id, e) => {
 
-    let confirma = confirm("Estas  segur?");
+  //   let confirma = confirm("Estas  segur?");
 
-    if (confirma) {
-      fetch("https://backend.insjoaquimmir.cat/api/posts/" + id, {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + authToken,
-        },
-        method: "DELETE",
-      })
-        .then((data) => data.json())
-        .then((resposta) => {
-          if (resposta.success == true) {
-            // provoca el refrescat del component i la reexecució de useEffect
-            setRefresh(!refresh);
-          }
-        });
-    }
-  };
+  //   if (confirma) {
+  //     fetch("https://backend.insjoaquimmir.cat/api/posts/" + id, {
+  //       headers: {
+  //         Accept: "application/json",
+  //         "Content-Type": "application/json",
+  //         Authorization: "Bearer " + authToken,
+  //       },
+  //       method: "DELETE",
+  //     })
+  //       .then((data) => data.json())
+  //       .then((resposta) => {
+  //         if (resposta.success == true) {
+  //           // provoca el refrescat del component i la reexecució de useEffect
+  //           setRefresh(!refresh);
+  //         }
+  //       });
+  //   }
+  // };
+  useEffect(() => {
+    dispatch(getposts(0, authToken,email));
+  }, []);
 
   return (
     <>
@@ -126,15 +131,33 @@ export const PostsList = () => {
                   </tr>
                 </thead>
                 <tbody> 
-                  {loading ? "Espera..." : <>{data.map((v) => {
+                  {isLoading 
+                  ? "Espera..." : 
+                  <>{posts.map((v) => {
                     return (
             
                       <>
-                      { v.visibility.id == 1 || v.author.email == usuari ? (<PostList  deletePost={ deletePost } key={v.id} v={v}/>) : <></> }
+                      { v.visibility.id == 1 || v.author.email == usuari ? (<PostList  delPost={ delPost } key={v.id} v={v}/>) : <></> }
                   
                       </>
                       )
                   })}</>}
+                  {isLoading ? (
+                    <></>    
+                  ) : (
+                    Array.isArray(posts) && posts.length ? (
+                      posts.map((v) => {
+                        return (
+                        <>
+                          { v.visibility.id == 1 || v.author.email == usuari ? (<PostList  delPost={ delPost } key={v.id} v={v}/>) : <></> }
+                      
+                        </>
+                        )
+                      })
+                    ) : (
+                      <div>No hay post</div>
+                    )
+                  )}
                 </tbody>
               </table>
             </div>

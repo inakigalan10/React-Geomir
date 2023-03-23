@@ -67,8 +67,8 @@ export const delComment = (comment, authToken) => {
 };
 
 export const addComment =  ( post_id, comment, authToken) => {
-    console.log(comment)
-    return async (dispatch, getState) => {
+
+  return async (dispatch, getState) => {
     const data = await fetch(
       "https://backend.insjoaquimmir.cat/api/posts/"+post_id+"/comments",
       {
