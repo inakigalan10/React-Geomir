@@ -14,21 +14,32 @@ export const postSlice = createSlice({
     initialState,
     reducers: {
       startLoadingPosts: (state) => {
-        state.isLoading = true;
+          state.isLoading = true;
       },
-      setPosts: (state, action ) => {
-  
-        state.posts= action.payload
-        state.isLoading=false
-        },
 
-        setError: (state,action) => {  
+      setPosts: (state, action ) => {
+          state.posts = action.payload
+          state.isLoading = false
+      },
+
+      setPost: (state, action ) => {
+          state.post = action.payload
+          state.isLoading = false
+      },
+
+      setLikes: (state, action ) => {
+          state.likes = action.payload
+      },
+
+      setLiked: (state, action ) => {
+          state.liked = action.payload
+      },
+
+      setError: (state,action) => {
           state.error = action.payload
-        },
-        
-      
-    }
+      },
+  }
   });
   
-  export const { startLoadingPosts,setPosts,setError } = postSlice.actions;
+  export const {  startLoadingPosts, setPosts, setPost, setLikes, setLiked, setError} = postSlice.actions;
   export default postSlice.reducer

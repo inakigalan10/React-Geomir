@@ -1,110 +1,27 @@
 import React from "react";
-import { useState } from "react";
-import { useEffect } from "react";
-import { useContext } from "react";
+import { useEffect, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { UserContext } from "../userContext";
-import "leaflet/dist/leaflet.css";
-import { useReducer } from "react";
-import postsMarksReducer, { addpostmark, ismarked } from "../slices/postMarkSlice";
+import { addpostmark, ismarked } from "../slices/postMarkSlice";
+import { CommentsList } from "./comments/CommentsList";
+import { getPost, like, unlike, delPost, editPost } from "../slices/posts/thunks";
 
 import "../App.css";
-import { Icon } from "leaflet";
-
-import { Marker, Popup, MapContainer, TileLayer, useMap } from "react-leaflet";
-import { PostsMenu } from "./PostsMenu";
-import { CommentAdd } from "./comments/CommentAdd";
-import { CommentsList } from "./comments/CommentsList";
-// import { MarkerLayer, Marker } from "react-leaflet-marker";
-// import { useForm } from '../hooks/useForm';
-// const initialState = [];
-// const init = () => {
-//   // Si localstorage tornes null tornariem un array buit
-//   return JSON.parse(localStorage.getItem("postMarks")) || [];
-// };
-
+import "leaflet/dist/leaflet.css";
 
 export const Post = () => {
-  const { id } = useParams();
-  const { postMarks, isMarked } = useSelector((state) => state.postMarks);
+
+  const { usuari, email, setUsuari, authToken, setAuthToken } = useContext(UserContext);
+  const { post, page=0, error="", isLoading=true, likes, liked } = useSelector((state) => state.posts);
   const dispatch = useDispatch();
 
-  // const [postMarks, dispatchPostsMarks] = useReducer(postsMarkReducer, initialState, init);
-  const {pathname} = useLocation();
-
-  // useEffect (() => {
-  //     localStorage.setItem("postMarks", JSON.stringify(postMarks));
-  //  }, [postMarks] );
-
-  let { usuari, setUsuari, authToken, setAuthToken } = useContext(UserContext);
-  let [post, setPost] = useState({});
-
-  // place és un objecte, amb ojctes interns (place.file.filepath, per exemple)
-  // Quan llegim amb fetch aquest triga un estona en obtenir les dades
-  // i al renderitzar amb aquest objecte buit, dona error
-  // i l 'aplicació peta i ja no es torna a renderitzar quan places
-  // té el valor correcte
-  // Emprem isLoading, per rendertizar només quan ja s'ha carregat el place
-  let [isLoading, setIsLoading] = useState(true);
-  let [liked, setLiked] = useState(false);
-  let [likes, setLikes] = useState(0);
-
-  const unlike = async () => {
-    setLiked(false);
-    console.log("Not Liked");
-    const data = await fetch(
-      "https://backend.insjoaquimmir.cat/api/posts/" + id + "/likes",
-      {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + authToken,
-        },
-        method: "DELETE",
-      }
-    );
-
-    const resposta = await data.json();
-    if (resposta.success == true) {
-      setLiked(false);
-      setLikes(likes - 1);
-    }
-  };
-
- 
-  const like = async () => {
-    try {
-      const data = await fetch(
-        "https://backend.insjoaquimmir.cat/api/posts/" + id + "/likes",
-        {
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + authToken,
-          },
-          method: "POST",
-        }
-      );
-      const resposta = await data.json();
-
-      if (resposta.success == true) {
-        setLiked(true);
-        setLikes(likes + 1);
-      } else {
-        setLiked(false);
-        console.log("Epp, algo ha passat ");
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  };
+  const { id } = useParams();
+  const { pathname } = useLocation();
+  const { postMarks, isMarked } = useSelector((state) => state.postMarks);
 
   const markPost = (event) => {
     event.preventDefault();
-    console.log("Afegeixo");
-    // console.log({ post });
-
     if(post.body.lenght <= 1) return;
 
     const postMark = {
@@ -113,159 +30,17 @@ export const Post = () => {
         ruta: pathname
     };
 
-    // const action = {
-    //     type: "Add Mark",
-    //     payload: mark
-    // };
     console.log(postMark)
-    dispatch(addpostmark(postMark))
-
-    
-};
-  const test_like = async () => {
-    try {
-      const data = await fetch(
-        "https://backend.insjoaquimmir.cat/api/posts/" + id + "/likes",
-        {
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + authToken,
-          },
-          method: "POST",
-        }
-      );
-      const resposta = await data.json();
-
-      console.log(resposta);
-      if (resposta.success == true) {
-        setLiked(false);
-        console.log("Not Liked");
-        const data = await fetch(
-          "https://backend.insjoaquimmir.cat/api/posts/" + id + "/likes",
-          {
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
-              Authorization: "Bearer " + authToken,
-            },
-            method: "DELETE",
-          }
-        );
-        const resposta = await data.json();
-      } else {
-        setLiked(true);
-        console.log("Liked");
-      }
-    } catch (e) {
-      console.log("oeoeoeoe");
-      console.log(e);
-    }
+    dispatch(addpostmark(postMark))  
   };
-  const getPost = async () => {
-    try {
-      const data = await fetch(
-        "https://backend.insjoaquimmir.cat/api/posts/" + id,
-        {
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + authToken,
-          },
-          method: "GET",
-        }
-      );
-      const resposta = await data.json();
 
-      // Faria falta control·lar possible error
-
-      console.log(resposta.data);
-      // En aquest punt omplim l'array,  resposta. data
-      // no és un array, és un objecte retornat per l'api
-      // per tant, hem de crear un array, d'un sol element
-      // per a que el .map del jsx pugui iterar l'únic
-      // element
-      setPost(resposta.data);
-      setLikes(resposta.data.likes_count);
-      console.log(resposta.data.likes_count);
-      console.log(post);
-      // Ara podem dir que ja s'ha carregat place i es pot renderitzar
-      setIsLoading(false);
-
-      // Actualitzem la vble d'estat places
-      //setPlaces(resposta.data);
-      // Canvia el valor de refresca
-      // provocarà que entri a useEffect
-      // al fer el rendertizat
-      //setRefresca(false);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-  // Sempre necessari, o al actualitzar l'state torna a executar-ho i entra
-  // en bucle
   useEffect(() => {
-    getPost();
-    test_like();
+    dispatch(getPost(id, authToken));
     dispatch(ismarked(id));
-
   }, []);
-
-  // const handleNewPostMark = (e) => {
-  //   e.preventDefault()
-  //   console.log("Afegeixo");
-  //   //console.log({ postMarks });
-
-  //   let postMarks = { 
-  //       id: post.id,
-  //       body:post.body,
-  //       link:pathname,
-  //   } 
-
-   
-
-  //   const action = {
-  //     type: "Add Post Mark",
-  //     payload: postMarks
-  //   };
-  //   dispatchPostsMarks(action);
-  // };
-
-  
-
-  const position = [43.92853, 2.14255];
-
-  const deletePost = (id, e) => {
-    e.preventDefault();
-
-    let confirma = confirm("Estas  segur?");
-
-    if (confirma) {
-      fetch("https://backend.insjoaquimmir.cat/api/posts/" + id, {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + authToken,
-        },
-        method: "DELETE",
-      })
-        .then((data) => data.json())
-        .then((resposta) => {
-          console.log(resposta);
-          if (resposta.success == true) {
-            console.log("OK");
-            // provoca el refrescat del component i la reexecució de useEffect
-            setRefresca(true);
-          }
-        });
-    }
-  };
 
   return (
     <>
-      {/* PlacesShow { id } */}
-
-      {/* Només es renderitza quan isLoading es false */}
       {isLoading ? (
         "Espera...."
       ) : (
@@ -285,36 +60,21 @@ export const Post = () => {
             </div>
 
             <div className="max-w-xl">
-              {/* <h2 className="bg-blue-300 col-span-1 text-xl font-semibold">
-                {post.name}
-              </h2> */}
-              <span className="bg-blue-200 col-span-1 block pb-2 text-sm dark:text-gray-400">
+              <span className="bg-black-500 col-span-1 block pb-2 text-sm dark:text-gray-400">
                 Enviada per: {post.author.name}
               </span>
-              <span className="self-center   px-9 bg-gray-200 col-span-2 text-x2 font-semibold">
+              <span className="self-center px-9 bg-blue-400 col-span-2 text-x2 font-semibold">
                 Latitud: {post.latitude}{" "}
               </span>
-              <span className="self-center px-7 bg-gray-200 text-x2 font-semibold">
+              <span className="self-center px-7 bg-blue-700 text-x2 font-semibold">
                 Longitud: {post.longitude}
               </span>
 
-              <div className="bg-orange-100 py-3 text-x2 font-semibold">
-                Cos
+              <div className="bg-black-100 py-3 text-x2 font-semibold">
+                <h3>Cos</h3>
               </div>
-              <p className=" bg-yellow-100">{post.body}</p>
+              <p className=" bg-black-100">{post.body}</p>
               <div className="mt-10 h-12 max-h-full md:max-h-screen">
-                {/* <MapContainer  style={{ height: 280 }} center={[43.92853, 2.14255]} zoom={12} scrollWheelZoom={false}>
-  <TileLayer
-    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-  />
-  <Marker position={[43.92853, 2.14255]}>
-    <Popup>
-       { position }. 
-    </Popup>
-  </Marker>
-</MapContainer> */}
-
                 {post.author.email === usuari ? (
                   <>
                     <Link
@@ -327,7 +87,7 @@ export const Post = () => {
                     <a
                       href="#"
                       className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 h-10 md:h-10 uppercase"
-                      onClick={(e) => deletePost(id, e)}
+                      onClick={(e) => dispatch( delPost(post, authToken)) }
                     >
                       {" "}
                       Esborrar
@@ -339,10 +99,9 @@ export const Post = () => {
                 {isMarked ? (
                   <a
                     href="#"
-                    
                     className="bg-blue-300 hover:bg-blue-400 text-white font-bold py-2 px-4 h-10 md:h-10 uppercase"
                   >
-                    ELIMINAR POST MARK
+                    Desat
                   </a>
                 ) : (
                   <a
@@ -350,14 +109,14 @@ export const Post = () => {
                     onClick={(e) => markPost(e)}
                     className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 h-10 md:h-10 uppercase"
                   >
-                    AÑADIR POST MARK 
+                    Desar
                   </a>
                 )}
 
                 {liked ? (
                   <a
                     href="#"
-                    onClick={(e) => unlike(id, e)}
+                    onClick={(e) => dispatch(unlike(id, authToken, likes))}
                     className="bg-blue-300 hover:bg-blue-400 text-white font-bold py-2 px-4 h-10 md:h-10 uppercase"
                   >
                     - 👍 {likes}
@@ -365,14 +124,13 @@ export const Post = () => {
                 ) : (
                   <a
                     href="#"
-                    onClick={(e) => like(id, e)}
+                    onClick={(e) => dispatch(like(id, authToken, likes))}
                     className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 h-10 md:h-10 uppercase"
                   >
                     + 👍 {likes}
                   </a>
                 )}
-
-                {/* <ReviewAdd id={place.id}/> */}
+                
                 <CommentsList
                   id={post.id}
                   comments_count={post.comments_count}
