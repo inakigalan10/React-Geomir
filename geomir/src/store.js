@@ -13,6 +13,5 @@ export const store = configureStore({
     reviews: reviewSlice,
     comments:commentSlice
 
-
   },
 })
