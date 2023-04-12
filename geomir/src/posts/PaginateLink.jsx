@@ -12,7 +12,9 @@ export const PaginateLink = ({ page }) => {
             <div>
                 {page.active ? (
                     <>
-                        <a  href="#!">
+                        <a  class="relative block rounded bg-neutral-800 py-1.5 px-3 text-lg font-medium text-neutral-50 
+                        transition-all duration-300 dark:bg-neutral-900"
+ href="#!">
                             {/* Per eliminar els &quote */}
                             <div dangerouslySetInnerHTML={{ __html: page.label }} />
                         </a>
@@ -21,7 +23,10 @@ export const PaginateLink = ({ page }) => {
                     <>
                         <li>
                             {/* Artifici per a obtenir el número de pàgina de la url */}
-                            <a onClick={(e) => { if (page.url != null) dispatch(setPage(page.url.split("=")[1])) }} href="#!">
+                            <a onClick={(e) => { if (page.url != null) dispatch(setPage(page.url.split("=")[1])) }} 
+                            class="relative block rounded bg-transparent py-1.5 px-3 text-lg text-neutral-600 
+                            transition-all duration-300 hover:bg-neutral-100 dark:text-white dark:hover:bg-neutral-700 dark:hover:text-white"
+                            href="#!">
                                 <div dangerouslySetInnerHTML={{ __html: page.label }}/>
                             </a>
                         </li>

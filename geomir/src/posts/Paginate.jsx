@@ -13,12 +13,13 @@ const Paginate = () => {
     },[pages])
   return (
     <>
-
+    <ul className='flex justify-center items-center my-10'>
           { pages.map ( (page)=> (
                 
                 <PaginateLink page={page}/>
               
             ) ) }
+    </ul>
        
     </>
   )
