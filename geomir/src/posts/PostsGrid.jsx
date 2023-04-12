@@ -15,6 +15,7 @@ import { PostGrid } from "./PostGrid";
 import { getposts } from "../slices/posts/thunks";
 import { useDispatch, useSelector } from "react-redux";
 import { delPost } from '../slices/posts/thunks';
+import Paginate from "./Paginate";
 
 
 export const PostsGrid = () => {
@@ -23,7 +24,7 @@ export const PostsGrid = () => {
   // // Dades del context. Ens cal el token per poder fer les crides a l'api
   // let { usuari, setUsuari, authToken, setAuthToken } = useContext(UserContext);
   const { usuari, email,setUsuari, authToken, setAuthToken } = useContext(UserContext);
-  const { posts = [], page=0, isLoading=true, add=true, error=""} = useSelector((state) => state.posts);
+  const { posts = [], page, isLoading, add=true, error=""} = useSelector((state) => state.posts);
   const dispatch = useDispatch();
 
 
@@ -66,9 +67,9 @@ export const PostsGrid = () => {
   //   }
   // };
   useEffect(() => {
-    dispatch(getposts(0, authToken,email));
+    dispatch(getposts(page, authToken));
     
-  }, []);
+  }, [page]);
   return (
     <>
       <div className="py-16 bg-gradient-to-br from-green-50 to-cyan-100">
@@ -90,11 +91,13 @@ export const PostsGrid = () => {
                 { v.visibility.id == 1 || v.author.email == usuari ? (<PostGrid  delPost={ delPost } key={v.id} v={v}/>) : <></> }
             
                 </>
-                )   
+                )
+                 
             })}</>}
-
             
           </div>
+          <Paginate/>
+
         </div>
       </div>
     </>

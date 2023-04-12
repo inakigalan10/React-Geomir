@@ -1,34 +1,40 @@
-import { setError, setPosts, startLoadingPosts, setPost, setLikes, setLiked  } from "./postSlice";
+import { setError, setPosts, startLoadingPosts, setPost, setLikes, setLiked, setPages } from "./postSlice";
 
 
-export const getposts = (page = 0, authToken, usuari="") => {
+
+export const getposts = (page = 0, authToken) => {
+
     return async (dispatch, getState) => {
-
-        dispatch(startLoadingPosts());
-
-        const headers = {
-            headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json",
-                Authorization: "Bearer " + authToken,
-            },
-            method: "GET",
-        };
-        const url = "https://backend.insjoaquimmir.cat/api/posts"
-
-        const data = await fetch(url,  headers  );
-        const resposta = await data.json();
-
-        if (resposta.success == true) 
-        {
-            dispatch(setPosts(resposta.data));
+    dispatch(startLoadingPosts());
+    const url =
+    page > 0
+    ? "https://backend.insjoaquimmir.cat/api/posts?paginate=1&page=" + page 
+    : "https://backend.insjoaquimmir.cat/api/posts";
+    const options = {
+    headers: {
+    Accept: "application/json",
+    "Content-Type": "application/json",
+    Authorization: "Bearer " + authToken,
+    },
+    method: "GET",
+    };
+    try {
+        const res = await fetch(url, options);
+        const json = await res.json();
+        // si es pagina, data.collection i no data
+        console.log(json.data.links);
+        if (page > 0) {
+            dispatch(setPosts(json.data.collection));
+            dispatch(setPages(json.data.links));
+            console.log(json.data.links);
+        } else { 
+        dispatch(setPosts(json.data));
         }
-        else {
-            dispatch (setError(resposta.message));
-        }
-       
-};
-}
+    } catch (e) {
+        setError(e);
+    }
+    };
+    }
 export const delPost = (post, authToken) => {
     return async (dispatch, getState) => {
         let confirma = confirm("Estas  segur?");
